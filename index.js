@@ -40,7 +40,6 @@ child4 = [400, 400];
 
 const props = { svg: mistySvg, dimensions, color: 'black', points: [] };
 
-appendLine({ ...props, points: [parent1, parent2] })
 // fint middle
 const getPointsMiddle = (point1, point2) => (
   [(point1[0] + point2[0]) / 2, (point1[1] + point2[1]) / 2]
@@ -55,20 +54,35 @@ createPointsLine = (middle, end) => (
  [middle, getCurve(middle, end), end]
 )
 
+appendLine({ ...props, points: [parent1, parent2] })
 appendLine({ ...props, points: createPointsLine(middle, child1) })
 appendLine({ ...props, points: createPointsLine(middle, child2) })
 appendLine({ ...props, points: createPointsLine(middle, child3) })
 appendLine({ ...props, points: createPointsLine(middle, child4) })
 
-// const appendCircle = (svg, x, y) => {
-//   return svg.append("circle")
-//      .attr("cx", x)
-//      .attr("cy", y)
-//      .attr("r", 80)
-//      .attr("fill", "#7CE8D5");
-// }
-//
-// appendCircle({ svg: mistySvg, x: 0, y: 0})
+const appendCircle = ({
+  svg,
+  point,
+  radius = 13,
+  dimensions
+}) => {
+  const x = point[0];
+  const y = point[1]
+  var circle = svg.append("circle")
+     .attr("cx", x)
+     .attr("cy", y)
+     .attr("r", radius)
+     .attr('transform', getTranslateString(dimensions.padding))
+     .attr('class', 'circle')
+}
+
+
+appendCircle({ ...props, point: parent1 })
+appendCircle({ ...props, point: parent2 })
+appendCircle({ ...props, point: child1 })
+appendCircle({ ...props, point: child2 })
+appendCircle({ ...props, point: child3 })
+appendCircle({ ...props, point: child4 })
 
 // var rect = mistySvg.append("rect")
 //    .attr("x", 100)
@@ -85,10 +99,3 @@ appendLine({ ...props, points: createPointsLine(middle, child4) })
 //   .text('click me!')
 //   .attr("x", 150)
 //   .attr("y", 150)
-
-
-var circle = mistySvg.append("circle")
-   .attr("cx", 200)
-   .attr("cy", 300)
-   .attr("r", 80)
-   .attr("fill", "#7CE8D5");
