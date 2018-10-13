@@ -3,14 +3,10 @@ const getTranslateString = (x, y = x) => {
 }
 // John Misty
 const dimensions = {
-  width: 500,
-  height: 500,
-  padding: 50
+  width: 800,
+  height: 800,
+  padding: 80
 };
-const width = 500;
-const height = 500;
-const padding = 50;
-
 
 const mistySvg = d3.select('.john-misty')
     .attr("width", dimensions.width)
@@ -67,7 +63,7 @@ const appendCircle = ({
   dimensions
 }) => {
   const x = point[0];
-  const y = point[1]
+  const y = point[1];
   var circle = svg.append("circle")
      .attr("cx", x)
      .attr("cy", y)
@@ -77,34 +73,43 @@ const appendCircle = ({
 }
 
 
-appendCircle({ ...props, point: parent1 })
-appendCircle({ ...props, point: parent2 })
-appendCircle({ ...props, point: child1 })
-appendCircle({ ...props, point: child2 })
-appendCircle({ ...props, point: child3 })
-appendCircle({ ...props, point: child4 })
+// appendCircle({ ...props, point: parent1 })
+// appendCircle({ ...props, point: parent2 })
+// appendCircle({ ...props, point: child1 })
+// appendCircle({ ...props, point: child2 })
+// appendCircle({ ...props, point: child3 })
+// appendCircle({ ...props, point: child4 })
 
-mistySvg.append("rect")
-    .attr("rx", 6)
-    .attr("ry", 6)
-    .attr("x", 0)
-    .attr("y", 0)
-    .attr("width", 50)
-    .attr("height", 25)
-    .attr("transform", getTranslateString(dimensions.padding))
-    .attr('class', 'text-container')
+const appendRect = ({
+  svg,
+  point,
+  height,
+  width,
+  dimensions,
+}) => {
+  const x = point[0] - width / 2;
+  const y = point[1] - height / 2;
 
+  return svg.append("rect")
+      .attr("rx", 6)
+      .attr("ry", 6)
+      .attr("x", x)
+      .attr("y", y)
+      .attr("width", width)
+      .attr("height", height)
+      .attr("transform", getTranslateString(dimensions.padding))
+      .attr('class', 'text-container')
+}
 
-// var rect = mistySvg.append("rect")
-//    .attr("x", 100)
-//    .attr("y", 100)
-//    .attr("width", 200)
-//    .attr("height", 100)
-//    .attr("fill", "#9B95FF")
-//    .on('click', function(e, i, nodeList) {
-//      rect.attr('width', 100)
-//      drawText.text('')
-//    })
+const rectProp = { ...props, point: [0, 0], width: 100, height: 90 }
+
+appendRect({ ...rectProp, point: parent1 })
+appendRect({ ...rectProp, point: parent2 })
+appendRect({ ...rectProp, point: child1 })
+appendRect({ ...rectProp, point: child2 })
+appendRect({ ...rectProp, point: child3 })
+appendRect({ ...rectProp, point: child4 })
+
 
 // const drawText = mistySvg.append('text')
 //   .text('click me!')
