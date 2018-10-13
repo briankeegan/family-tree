@@ -7,6 +7,12 @@ svg {
   stroke-width: 3px;
 }
 
+.text-container {
+  fill: #ddd;
+  stroke: green;
+  stroke-width: 3px;
+}
+
 .node text { font: 12px sans-serif; }
 
 .node--internal text {

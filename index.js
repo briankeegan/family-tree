@@ -84,6 +84,17 @@ appendCircle({ ...props, point: child2 })
 appendCircle({ ...props, point: child3 })
 appendCircle({ ...props, point: child4 })
 
+mistySvg.append("rect")
+    .attr("rx", 6)
+    .attr("ry", 6)
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("width", 50)
+    .attr("height", 25)
+    .attr("transform", getTranslateString(dimensions.padding))
+    .attr('class', 'text-container')
+
+
 // var rect = mistySvg.append("rect")
 //    .attr("x", 100)
 //    .attr("y", 100)
