@@ -96,12 +96,15 @@ const appendText = ({
 }) => {
   const x = point[0] - width / 2 + 10;
   const y = point[1] + padding
-  return svg.append('text')
+  const t2 =  svg.append('text')
     .text(text)
     .attr("x", x)
     .attr("y", y)
     .attr("transform", getTranslateString(dimensions.padding))
     .attr('class', 'text')
+
+    console.log(t2.node().getComputedTextLength())
+    return t2
 }
 
 const appendTextArray = (props) => {
