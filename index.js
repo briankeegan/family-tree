@@ -110,8 +110,22 @@ appendRect({ ...rectProp, point: child2 })
 appendRect({ ...rectProp, point: child3 })
 appendRect({ ...rectProp, point: child4 })
 
+// Text
+const appendText = ({
+  svg,
+  point,
+  height,
+  width,
+  dimensions,
+}) => {
+  const x = point[0];
+  const y = point[1];
+  return svg.append('text')
+    .text('click me!')
+    .attr("x", x)
+    .attr("y", y)
+    .attr("transform", getTranslateString(dimensions.padding))
+    .attr('class', 'text')
+}
 
-// const drawText = mistySvg.append('text')
-//   .text('click me!')
-//   .attr("x", 150)
-//   .attr("y", 150)
+appendText({ ...props, point: parent1 })
