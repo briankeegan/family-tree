@@ -96,7 +96,7 @@ const appendText = ({
 }) => {
   const x = point[0] - width / 2 + 10;
   const y = point[1] + padding
-  const t2 =  svg.append('text')
+  return svg.append('text')
     .text(text)
     .attr("x", x)
     .attr("y", y)
@@ -117,21 +117,37 @@ const appendTextWrap = ({
       // iterate, if length is longer than Width
       // split
       // continue until none left
-    const texWrap = appendText({
-      svg,
-      point,
-      width,
-      dimensions,
-      text,
-      padding
+  while(words.length > 0) {
+    let count = 0;
+    let line = ''
+    words.forEach(word => {
+      line = word;
+      let textWrap = appendText({
+        svg,
+        point,
+        width,
+        dimensions,
+        text: line,
+        padding
+      })
+      if (textWrap.node().getComputedTextLength() - 20 <= width) {
+        // console.log(this)
+        // textWrap.attr('text', 'asdf')
+      }
+      console.log('bfoer',textWrap.node().getComputedTextLength())
+      textWrap.node().textContent = 12
+      console.log('after', textWrap.node().getComputedTextLength())
     })
-    return texWrap;
+    // if (textWrap.node().getComputedTextLength()) {
+    // }
+    words.pop()
+  }
 }
 
 const appendTextArray = (props) => {
   const { textArray } =  props;
   textArray.forEach((text, i) => {
-    const tr = appendTextWrap({
+    return appendTextWrap({
       ...props,
       text,
       padding: i * 20
