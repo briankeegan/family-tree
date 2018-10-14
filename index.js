@@ -102,15 +102,36 @@ const appendText = ({
     .attr("y", y)
     .attr("transform", getTranslateString(dimensions.padding))
     .attr('class', 'text')
-
-    console.log(t2.node().getComputedTextLength())
-    return t2
+}
+// Text-wrap
+const appendTextWrap = ({
+  svg,
+  point,
+  width,
+  dimensions,
+  text,
+  padding
+}) => {
+  const words = text.split(/\s/g);
+      // while greater than 1
+      // iterate, if length is longer than Width
+      // split
+      // continue until none left
+    const texWrap = appendText({
+      svg,
+      point,
+      width,
+      dimensions,
+      text,
+      padding
+    })
+    return texWrap;
 }
 
 const appendTextArray = (props) => {
   const { textArray } =  props;
   textArray.forEach((text, i) => {
-    const tr = appendText({
+    const tr = appendTextWrap({
       ...props,
       text,
       padding: i * 20
@@ -163,20 +184,4 @@ const appendTextBox = ({
 
 appendTextBox({ ...rectProp, point: parent1, textArray: [
   'James William Keegan (William James)',
-  'asdf',
-  'asdf',
-  'asdf',
-  'asdf',
-  'asdf',
-  'asdf',
-  'asdf',
-  'asdf',
-  'asdf',
-  'asdf',
-  'asdf',
-  'asdf',
-  'asdf',
-  'asdf',
-  'asdf',
-  'asdf',
 ] })
