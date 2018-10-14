@@ -64,7 +64,7 @@ const appendRect = ({
   dimensions,
 }) => {
   const x = point[0] - width / 2;
-  const y = point[1] - height / 2;
+  const y = point[1] - 20;
 
   return svg.append("rect")
       .attr("rx", 6)
@@ -77,11 +77,10 @@ const appendRect = ({
       .attr('class', 'text-container')
 }
 
-const rectProp = { ...props, point: [0, 0], width: 100, height: 90 }
+const rectProp = { ...props, point: [0, 0], width: 100, height: 140 }
 
-appendRect({ ...rectProp, point: parent1 })
 appendRect({ ...rectProp, point: parent2 })
-appendRect({ ...rectProp, point: child1 })
+appendRect({ ...rectProp, point: child1, width: 150 })
 appendRect({ ...rectProp, point: child2 })
 appendRect({ ...rectProp, point: child3 })
 appendRect({ ...rectProp, point: child4 })
@@ -90,14 +89,13 @@ appendRect({ ...rectProp, point: child4 })
 const appendText = ({
   svg,
   point,
-  height,
   width,
   dimensions,
   text,
   padding = 0
 }) => {
   const x = point[0] - width / 2 + 10;
-  const y = point[1] - height / 2 + 20 + padding;
+  const y = point[1] + padding
   return svg.append('text')
     .text(text)
     .attr("x", x)
@@ -109,7 +107,7 @@ const appendText = ({
 const appendTextArray = (props) => {
   const { textArray } =  props;
   textArray.forEach((text, i) => {
-    appendText({
+    const tr = appendText({
       ...props,
       text,
       padding: i * 20
@@ -125,4 +123,57 @@ const textArray = [
   '5'
 ]
 
-appendTextArray({ ...rectProp, point: parent1, textArray })
+appendTextArray({ ...rectProp, point: parent2, textArray });
+
+
+// Create textBox
+// Width, is auto for now
+// Height is depedent on how many items there are
+// const props = { svg: mistySvg, dimensions, color: 'black', points: [] };
+// const rectProp = { ...props, point: [0, 0], width: 100, height: 140 }
+
+
+const appendTextBox = ({
+  svg,
+  point,
+  dimensions,
+  textArray,
+  width
+}) => {
+  const height = (textArray || []).length * 20 + 10
+  appendRect({
+    svg,
+    point,
+    dimensions,
+    width,
+    height
+  });
+
+  appendTextArray({
+    svg,
+    point,
+    dimensions,
+    width,
+    textArray
+  });
+};
+
+appendTextBox({ ...rectProp, point: parent1, textArray: [
+  'James William Keegan (William James)',
+  'asdf',
+  'asdf',
+  'asdf',
+  'asdf',
+  'asdf',
+  'asdf',
+  'asdf',
+  'asdf',
+  'asdf',
+  'asdf',
+  'asdf',
+  'asdf',
+  'asdf',
+  'asdf',
+  'asdf',
+  'asdf',
+] })
