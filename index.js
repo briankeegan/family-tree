@@ -56,30 +56,6 @@ appendLine({ ...props, points: createPointsLine(middle, child2) })
 appendLine({ ...props, points: createPointsLine(middle, child3) })
 appendLine({ ...props, points: createPointsLine(middle, child4) })
 
-const appendCircle = ({
-  svg,
-  point,
-  radius = 13,
-  dimensions
-}) => {
-  const x = point[0];
-  const y = point[1];
-  var circle = svg.append("circle")
-     .attr("cx", x)
-     .attr("cy", y)
-     .attr("r", radius)
-     .attr('transform', getTranslateString(dimensions.padding))
-     .attr('class', 'circle')
-}
-
-
-// appendCircle({ ...props, point: parent1 })
-// appendCircle({ ...props, point: parent2 })
-// appendCircle({ ...props, point: child1 })
-// appendCircle({ ...props, point: child2 })
-// appendCircle({ ...props, point: child3 })
-// appendCircle({ ...props, point: child4 })
-
 const appendRect = ({
   svg,
   point,
@@ -117,15 +93,36 @@ const appendText = ({
   height,
   width,
   dimensions,
+  text,
+  padding = 0
 }) => {
-  const x = point[0];
-  const y = point[1];
+  const x = point[0] - width / 2 + 10;
+  const y = point[1] - height / 2 + 20 + padding;
   return svg.append('text')
-    .text('click me!')
+    .text(text)
     .attr("x", x)
     .attr("y", y)
     .attr("transform", getTranslateString(dimensions.padding))
     .attr('class', 'text')
 }
 
-appendText({ ...props, point: parent1 })
+const appendTextArray = (props) => {
+  const { textArray } =  props;
+  textArray.forEach((text, i) => {
+    appendText({
+      ...props,
+      text,
+      padding: i * 20
+    });
+  })
+}
+
+const textArray = [
+  'asdfasdf',
+  'fdsafdsa',
+  '3',
+  '4',
+  '5'
+]
+
+appendTextArray({ ...rectProp, point: parent1, textArray })
