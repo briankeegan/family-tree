@@ -34,6 +34,9 @@ child2 = [200, 400];
 child3 = [400, 400];
 child4 = [600, 400];
 
+gChild1 = [500, 600];
+gChild2 = [700, 600];
+
 const props = { svg: mistySvg, dimensions, color: 'black', points: [] };
 
 // fint middle
@@ -43,11 +46,11 @@ const getPointsMiddle = (point1, point2) => (
 const middle = getPointsMiddle(parent1, parent2)
 
 const getCurve = (start, end) => (
-  [end[0], (start[1] + end[1]) / 2]
+  [end[0], (start[1] + end[1] + 150) / 2]
 )
 
 createPointsLine = (middle, end) => (
- [middle, getCurve(middle, end), end]
+ [middle, [middle[0], middle[1] + 150], getCurve(middle, end), end]
 )
 
 appendLine({ ...props, points: [parent1, parent2] })
@@ -55,6 +58,9 @@ appendLine({ ...props, points: createPointsLine(middle, child1) })
 appendLine({ ...props, points: createPointsLine(middle, child2) })
 appendLine({ ...props, points: createPointsLine(middle, child3) })
 appendLine({ ...props, points: createPointsLine(middle, child4) })
+
+appendLine({ ...props, points: createPointsLine(child4, gChild1) })
+appendLine({ ...props, points: createPointsLine(child4, gChild2) })
 
 const appendRect = ({
   svg,
@@ -200,6 +206,14 @@ appendTextBox({ ...rectProp, point: child4, textArray: [
   'asf  asdf (William James)',
 ] })
 appendTextBox({ ...rectProp, point: child3, textArray: [
+  'James William Keegan (William James)',
+  'asf  asdf (William James)',
+] })
+appendTextBox({ ...rectProp, point: gChild1, textArray: [
+  'James William Keegan (William James)',
+  'asf  asdf (William James)',
+] })
+appendTextBox({ ...rectProp, point: gChild2, textArray: [
   'James William Keegan (William James)',
   'asf  asdf (William James)',
 ] })
