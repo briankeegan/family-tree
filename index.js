@@ -3,7 +3,7 @@ const getTranslateString = (x, y = x) => {
 }
 // John Misty
 const dimensions = {
-  width: 800,
+  width: 1200,
   height: 800,
   padding: 80
 };
@@ -26,13 +26,13 @@ const appendLine = ({ svg, dimensions, color = '#000', points }) => {
 };
 
 const parent1 = [0, 0];
-const parent2 = [400, 0];
+const parent2 = [600, 0];
 
 
 child1 = [0, 400];
-child2 = [133.34, 400];
-child3 = [266.67, 400];
-child4 = [400, 400];
+child2 = [200, 400];
+child3 = [400, 400];
+child4 = [600, 400];
 
 const props = { svg: mistySvg, dimensions, color: 'black', points: [] };
 
@@ -77,13 +77,7 @@ const appendRect = ({
       .attr('class', 'text-container')
 }
 
-const rectProp = { ...props, point: [0, 0], width: 150 }
 
-appendRect({ ...rectProp, point: parent2 })
-appendRect({ ...rectProp, point: child1 })
-appendRect({ ...rectProp, point: child2 })
-appendRect({ ...rectProp, point: child3 })
-appendRect({ ...rectProp, point: child4 })
 
 // Text
 const appendText = ({
@@ -185,8 +179,27 @@ const appendTextBox = ({
   container.attr("height", height)
 
 };
+const rectProp = { ...props, point: [0, 0], width: 150 }
 
 appendTextBox({ ...rectProp, point: parent1, textArray: [
+  'James William Keegan (William James)',
+  'Born in US or Ireland ~ 1817',
+  'Married Eliza Foster July 17, 1836',
+  'Died prior to 1850 US census'
+] })
+appendTextBox({ ...rectProp, point: parent2, textArray: [
+  'Eliza (Elizabeth) Foster (Brennan)',
+'Adopted by Foster family',
+'Married James/William Keegan before 1938',
+'4 or 5 children',
+'Died 11-18-1882',
+'Buried at Green-Wood Cemetery in Brooklyn'
+] })
+appendTextBox({ ...rectProp, point: child4, textArray: [
+  'James William Keegan (William James)',
+  'asf  asdf (William James)',
+] })
+appendTextBox({ ...rectProp, point: child3, textArray: [
   'James William Keegan (William James)',
   'asf  asdf (William James)',
 ] })
