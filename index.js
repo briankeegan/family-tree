@@ -59,7 +59,7 @@ appendLine({ ...props, points: createPointsLine(middle, child4) })
 const appendRect = ({
   svg,
   point,
-  height,
+  height = 0,
   width,
   dimensions,
 }) => {
@@ -77,10 +77,10 @@ const appendRect = ({
       .attr('class', 'text-container')
 }
 
-const rectProp = { ...props, point: [0, 0], width: 100, height: 140 }
+const rectProp = { ...props, point: [0, 0], width: 100, height: 150 }
 
 appendRect({ ...rectProp, point: parent2 })
-appendRect({ ...rectProp, point: child1, width: 150 })
+appendRect({ ...rectProp, point: child1 })
 appendRect({ ...rectProp, point: child2 })
 appendRect({ ...rectProp, point: child3 })
 appendRect({ ...rectProp, point: child4 })
@@ -109,50 +109,51 @@ const appendTextWrap = ({
   point,
   width,
   dimensions,
-  text,
-  padding
+  lineNumber,
+  text
 }) => {
   const words = text.split(/\s/g);
-      // while greater than 1
-      // iterate, if length is longer than Width
-      // split
-      // continue until none left
-  while(words.length > 0) {
-    let count = 0;
-    let line = ''
-    words.forEach(word => {
-      line = word;
-      let textWrap = appendText({
+  let phrase = words.shift();
+  let textWrap = appendText({
+    svg,
+    point,
+    width,
+    dimensions,
+    text: phrase,
+    padding: lineNumber.increment() * 20
+  });
+  while (words.length > 0) {
+    let word = words.shift();
+    textWrap.node().textContent = `${phrase} ${word}`;
+    if (textWrap.node().getComputedTextLength() - 20 > width) {
+      textWrap.node().textContent = phrase;
+      appendTextWrap({
         svg,
         point,
         width,
         dimensions,
-        text: line,
-        padding
+        text: [ word, ...words ].join(' '),
+        lineNumber
       })
-      if (textWrap.node().getComputedTextLength() - 20 <= width) {
-        // console.log(this)
-        // textWrap.attr('text', 'asdf')
-      }
-      console.log('bfoer',textWrap.node().getComputedTextLength())
-      textWrap.node().textContent = 12
-      console.log('after', textWrap.node().getComputedTextLength())
-    })
-    // if (textWrap.node().getComputedTextLength()) {
-    // }
-    words.pop()
+    } else {
+      phrase += ` ${word}`
+    }
   }
 }
 
 const appendTextArray = (props) => {
-  const { textArray } =  props;
-  textArray.forEach((text, i) => {
-    return appendTextWrap({
+  const { textArray, lineNumber } =  props;
+  console.log(lineNumber)
+  let increment = { count: 0};
+  textArray.forEach((text) => {
+    appendTextWrap({
       ...props,
       text,
-      padding: i * 20
+      lineNumber
     });
   })
+  console.log(increment)
+  return increment;
 }
 
 const textArray = [
@@ -163,15 +164,6 @@ const textArray = [
   '5'
 ]
 
-appendTextArray({ ...rectProp, point: parent2, textArray });
-
-
-// Create textBox
-// Width, is auto for now
-// Height is depedent on how many items there are
-// const props = { svg: mistySvg, dimensions, color: 'black', points: [] };
-// const rectProp = { ...props, point: [0, 0], width: 100, height: 140 }
-
 
 const appendTextBox = ({
   svg,
@@ -180,24 +172,32 @@ const appendTextBox = ({
   textArray,
   width
 }) => {
-  const height = (textArray || []).length * 20 + 10
-  appendRect({
+  const lineNumber = {
+  	current: 0,
+  	increment: function() {
+  	   return this.current++;
+    }
+  }
+  const container = appendRect({
     svg,
     point,
     dimensions,
-    width,
-    height
+    width
   });
-
   appendTextArray({
     svg,
     point,
     dimensions,
     width,
-    textArray
+    textArray,
+    lineNumber
   });
+  const height = lineNumber.current * 20 + 10;
+  container.attr("height", height)
+
 };
 
 appendTextBox({ ...rectProp, point: parent1, textArray: [
   'James William Keegan (William James)',
+  'Poops',
 ] })
