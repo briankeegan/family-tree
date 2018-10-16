@@ -1,11 +1,6 @@
 svg {
   background: #ddd;
 }
-.circle {
-  fill: #ddd;
-  stroke: steelblue;
-  stroke-width: 3px;
-}
 
 .text-container {
   fill: #ddd;
