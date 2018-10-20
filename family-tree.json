@@ -1,0 +1,240 @@
+{
+  "families": [
+    {
+      "familyName": "Keegan",
+      "familyNameId": 0,
+      "members": [
+        {
+          "fullName": "James/William Keegan",
+          "firstName": "James/William",
+          "memberId": 0,
+          "partners": [
+            {
+              "familyNameId": 1,
+              "memberId": 0
+            }
+          ],
+          "children": [
+            {
+              "familyNameId": 0,
+              "memberId": 1
+            }
+          ]
+        },
+        {
+          "fullName": "James Foster Keegan",
+          "firstName": "James",
+          "middleName": "Foster",
+          "memberId": 1,
+          "partners": [
+            {
+              "familyNameId": 2,
+              "memberId": 1
+            }
+          ],
+          "parents": [
+            { "familyNameId": 0, "memberId": 0 },
+            { "familyNameId": 1, "memberId": 0 }
+          ],
+          "children": [
+            { "familyNameId": 0, "memberId": 2 },
+            { "familyNameId": 0, "memberId": 3 },
+            { "familyNameId": 0, "memberId": 4 },
+            { "familyNameId": 0, "memberId": 5 },
+            { "familyNameId": 0, "memberId": 6 },
+            { "familyNameId": 0, "memberId": 7 }
+          ]
+        },
+        {
+          "fullName": "James Alphonsus Keegan",
+          "firstName": "James",
+          "middleName": "Alphonsus",
+          "memberId": 2,
+          "partners": [
+          ],
+          "parents": [
+            { "familyNameId": 0, "memberId": 1 },
+            { "familyNameId": 2, "memberId": 1 }
+          ],
+          "children": [
+          ]
+        },
+        {
+          "fullName": "Elizabeth R. Keegan",
+          "firstName": "Elizabeth",
+          "middleName": "R.",
+          "memberId": 3,
+          "partners": [
+          ],
+          "parents": [
+            { "familyNameId": 0, "memberId": 1 },
+            { "familyNameId": 2, "memberId": 1 }
+          ],
+          "children": [
+          ]
+        },
+        {
+          "fullName": "William Keegan",
+          "firstName": "William",
+          "memberId": 4,
+          "partners": [
+          ],
+          "parents": [
+            { "familyNameId": 0, "memberId": 1 },
+            { "familyNameId": 2, "memberId": 1 }
+          ],
+          "children": [
+          ]
+        },
+        {
+          "fullName": "Mary Keegan",
+          "firstName": "Mary",
+          "memberId": 5,
+          "partners": [
+          ],
+          "parents": [
+            { "familyNameId": 0, "memberId": 1 },
+            { "familyNameId": 2, "memberId": 1 }
+          ],
+          "children": [
+          ]
+        },
+        {
+          "fullName": "John Francis Keegan (twin)",
+          "firstName": "John",
+          "middleName": "John",
+          "memberId": 6,
+          "partners": [
+          ],
+          "parents": [
+            { "familyNameId": 0, "memberId": 1 },
+            { "familyNameId": 2, "memberId": 1 }
+          ],
+          "children": [
+          ]
+        },
+        {
+          "fullName": "Edward Charles Keegan (twin)",
+          "firstName": "Edward",
+          "middleName": "Charles",
+          "memberId": 7,
+          "partners": [
+          ],
+          "parents": [
+            { "familyNameId": 0, "memberId": 1 },
+            { "familyNameId": 2, "memberId": 1 }
+          ],
+          "children": [
+          ]
+        },
+        {
+          "fullName": "Thomas Augustus Keegan",
+          "firstName": "Thomas",
+          "middleName": "Augustus",
+          "memberId": 8,
+          "partners": [
+          ],
+          "parents": [
+            { "familyNameId": 0, "memberId": 1 },
+            { "familyNameId": 2, "memberId": 1 }
+          ],
+          "children": [
+          ]
+        }
+      ]
+    },
+    {
+      "familyName": "Foster (Brennan)",
+      "familyNameId": 1,
+      "members": [
+        {
+          "fullName": "Eliza (Elizabeth) Foster (Brennan)",
+          "firstName": "Eliza (Elizabeth)",
+          "memberId": 0,
+          "partners": [
+            {
+              "familyNameId": 0,
+              "memberId": 0
+            }
+          ],
+          "children": [
+            {
+              "familyNameId": 0,
+              "memberId": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "familyName": "Gorman",
+      "familyNameId": 2,
+      "members": [
+        {
+          "fullName": "John Gorman",
+          "firstName": "John",
+          "memberId": 0,
+          "partners": [
+            {
+              "familyNameId": 3,
+              "memberId": 0
+            }
+          ],
+          "children": [
+            {
+              "familyNameId": 2,
+              "memberId": 1
+            }
+          ]
+        },
+        {
+          "fullName": "Rose Gorman",
+          "firstName": "Rose",
+          "memberId": 1,
+          "partners": [
+            {
+              "familyNameId": 0,
+              "memberId": 1
+            }
+          ],
+          "parents": [
+            { "familyNameId": 2, "memberId": 0 },
+            { "familyNameId": 3, "memberId": 0 }
+          ],
+          "children": [
+            { "familyNameId": 0, "memberId": 2 },
+            { "familyNameId": 0, "memberId": 3 },
+            { "familyNameId": 0, "memberId": 4 },
+            { "familyNameId": 0, "memberId": 5 },
+            { "familyNameId": 0, "memberId": 6 },
+            { "familyNameId": 0, "memberId": 7 }
+          ]
+        }
+      ]
+    },
+    {
+      "familyName": "Malone",
+      "familyNameId": 3,
+      "members": [
+        {
+          "fullName": "? Ann Malone",
+          "firstName": "?",
+          "middleName": "Ann",
+          "memberId": 0,
+          "partners": [
+            {
+              "familyNameId": 2,
+              "memberId": 0
+            }
+          ],
+          "children": [
+            {
+              "familyNameId": 2,
+              "memberId": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
