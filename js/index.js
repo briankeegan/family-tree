@@ -1,17 +1,7 @@
+// creatTable functions
 const getTranslateString = (x, y = x) => {
   return 'translate(' + x + ',' + y + ')';
 };
-
-// John Misty
-const dimensions = {
-  width: 1200,
-  height: 800,
-  padding: 80
-};
-
-const mistySvg = d3.select('.john-misty')
-  .attr('width', dimensions.width)
-  .attr('height', dimensions.height);
 
 const appendLine = ({ svg, dimensions, color = '#000', points }) => {
   const curveLineGenerator = d3.line().curve(d3.curveBundle);
@@ -26,67 +16,6 @@ const appendLine = ({ svg, dimensions, color = '#000', points }) => {
     .attr('transform', getTranslateString(dimensions.padding));
 };
 
-const parent1 = [0, 0];
-const parent2 = [600, 0];
-
-
-const child1 = [0, 400];
-const child2 = [200, 400];
-const child3 = [400, 400];
-const child4 = [600, 400];
-
-const gChild1 = [500, 600];
-const gChild2 = [700, 600];
-
-const props = { svg: mistySvg, dimensions, color: 'black', points: [] };
-
-// fint middle
-const getPointsMiddle = (point1, point2) => (
-  [(point1[0] + point2[0]) / 2, (point1[1] + point2[1]) / 2]
-);
-const middle = getPointsMiddle(parent1, parent2);
-
-const getCurve = (start, end) => (
-  [end[0], (start[1] + end[1] + 150) / 2]
-);
-
-const createPointsLine = (middle, end) => (
-  [middle, [middle[0], middle[1] + 150], getCurve(middle, end), end]
-);
-
-appendLine({ ...props, points: [parent1, parent2] });
-appendLine({ ...props, points: createPointsLine(middle, child1) });
-appendLine({ ...props, points: createPointsLine(middle, child2) });
-appendLine({ ...props, points: createPointsLine(middle, child3) });
-appendLine({ ...props, points: createPointsLine(middle, child4) });
-
-appendLine({ ...props, points: createPointsLine(child4, gChild1) });
-appendLine({ ...props, points: createPointsLine(child4, gChild2) });
-
-const appendRect = ({
-  svg,
-  point,
-  height = 0,
-  width,
-  dimensions,
-}) => {
-  const x = point[0] - width / 2;
-  const y = point[1] - 20;
-
-  return svg.append('rect')
-    .attr('rx', 6)
-    .attr('ry', 6)
-    .attr('x', x)
-    .attr('y', y)
-    .attr('width', width)
-    .attr('height', height)
-    .attr('transform', getTranslateString(dimensions.padding))
-    .attr('class', 'text-container');
-};
-
-
-
-// Text
 const appendText = ({
   svg,
   point,
@@ -104,7 +33,7 @@ const appendText = ({
     .attr('transform', getTranslateString(dimensions.padding))
     .attr('class', 'text');
 };
-// Text-wrap
+
 const appendTextWrap = (props) => {
   const { text, lineNumber, width } = props;
   const words = text.split(/\s/g);
@@ -116,8 +45,6 @@ const appendTextWrap = (props) => {
   });
   while (words.length > 0) {
     let word = words.shift();
-    // console.log(`${phrase} ${word}`)
-    // console.log(textWrap.node().getComputedTextLength() - 20 > width)
     textWrap.node().textContent = `${phrase} ${word}`;
     if (textWrap.node().getComputedTextLength() > width - 20) {
       textWrap.node().textContent = phrase;
@@ -176,7 +103,81 @@ const appendTextBox = ({
   container.attr('height', height);
 
 };
-const rectProp = { ...props, point: [0, 0], width: 150 };
+
+const appendRect = ({
+  svg,
+  point,
+  height = 0,
+  width,
+  dimensions,
+}) => {
+  const x = point[0] - width / 2;
+  const y = point[1] - 20;
+
+  return svg.append('rect')
+    .attr('rx', 6)
+    .attr('ry', 6)
+    .attr('x', x)
+    .attr('y', y)
+    .attr('width', width)
+    .attr('height', height)
+    .attr('transform', getTranslateString(dimensions.padding))
+    .attr('class', 'text-container');
+}; // appendRect
+
+const getPointsMiddle = (point1, point2) => (
+  [(point1[0] + point2[0]) / 2, (point1[1] + point2[1]) / 2]
+);
+
+const getCurve = (start, end) => (
+  [end[0], (start[1] + end[1] + 150) / 2]
+);
+
+const createPointsLine = (middle, end) => (
+  [middle, [middle[0], middle[1] + 150], getCurve(middle, end), end]
+);
+
+
+// using createTable functions
+// John Misty
+const dimensions = {
+  width: 1200,
+  height: 800,
+  padding: 80
+};
+
+const mistySvg = d3.select('.john-misty')
+  .attr('width', dimensions.width)
+  .attr('height', dimensions.height);
+
+
+const parent1 = [0, 0];
+const parent2 = [600, 0];
+
+
+const child1 = [0, 400];
+const child2 = [200, 400];
+const child3 = [400, 400];
+const child4 = [600, 400];
+
+const gChild1 = [500, 600];
+const gChild2 = [700, 600];
+
+const props = { svg: mistySvg, dimensions, color: 'black', points: [] };
+
+const middle = getPointsMiddle(parent1, parent2);
+
+
+appendLine({ ...props, points: [parent1, parent2] });
+appendLine({ ...props, points: createPointsLine(middle, child1) });
+appendLine({ ...props, points: createPointsLine(middle, child2) });
+appendLine({ ...props, points: createPointsLine(middle, child3) });
+appendLine({ ...props, points: createPointsLine(middle, child4) });
+
+appendLine({ ...props, points: createPointsLine(child4, gChild1) });
+appendLine({ ...props, points: createPointsLine(child4, gChild2) });
+
+const rectProp = { ...props, width: 150 };
 
 appendTextBox({ ...rectProp, point: parent1, textArray: [
   'James William Keegan (William James)',
