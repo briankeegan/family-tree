@@ -138,8 +138,8 @@ const createPointsLine = (middle, end) => (
 );
 
 
-// using createTable functions
-// John Misty
+// Creating table
+
 const dimensions = {
   width: 1200,
   height: 800,
