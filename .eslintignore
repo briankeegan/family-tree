@@ -1,0 +1,4 @@
+# Ignore public
+public/*
+# Ignore webpack
+webpack.config.js

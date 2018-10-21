@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 
 import familyData from 'family-tree.json';
+import processData from 'src/js/processData';
 
 import {
   getPointsMiddle,
@@ -9,9 +10,8 @@ import {
   appendTextBox,
 } from 'src/js/createTree';
 
-console.log('familyData', familyData)
-
 // Creating table
+processData(familyData);
 
 const dimensions = {
   width: 1200,
