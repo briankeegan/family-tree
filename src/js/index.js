@@ -1,11 +1,15 @@
 import * as d3 from 'd3';
 
+import familyData from 'family-tree.json';
+
 import {
   getPointsMiddle,
   appendLine,
   createPointsLine,
   appendTextBox,
-} from './createTree';
+} from 'src/js/createTree';
+
+console.log('familyData', familyData)
 
 // Creating table
 
