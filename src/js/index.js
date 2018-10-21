@@ -64,17 +64,17 @@ appendTextBox({ ...rectProp, point: parent2, textArray: [
 ] });
 appendTextBox({ ...rectProp, point: child4, textArray: [
   'James William Keegan (William James)',
-  'asf  asdf (William James)',
+  'Something else'
 ] });
 appendTextBox({ ...rectProp, point: child3, textArray: [
   'James William Keegan (William James)',
-  'asf  asdf (William James)',
+  'Something else'
 ] });
 appendTextBox({ ...rectProp, point: gChild1, textArray: [
   'James William Keegan (William James)',
-  'asf  asdf (William James)',
+  'Something else'
 ] });
 appendTextBox({ ...rectProp, point: gChild2, textArray: [
   'James William Keegan (William James)',
-  'asf  asdf (William James)',
+  'Something else'
 ] });

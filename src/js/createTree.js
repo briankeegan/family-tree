@@ -138,7 +138,7 @@ const createPointsLine = (middle, end) => (
   [middle, [middle[0], middle[1] + 150], getCurve(middle, end), end]
 );
 
-export { 
+export {
   getPointsMiddle,
   appendLine,
   createPointsLine,
