@@ -5,8 +5,7 @@
       {
         "targets": {
           "browsers": [
-            "last 2 versions", "safari >= 7",
-            "transform-object-rest-spread"
+            "last 2 versions", "safari >= 7"
           ]
         }
       }
