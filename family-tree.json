@@ -19,6 +19,9 @@
               "familyNameId": 0,
               "memberId": 1
             }
+          ],
+          "parents": [
+            { "familyNameId": 0, "memberId": 13 }
           ]
         },
         {

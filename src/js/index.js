@@ -11,7 +11,7 @@ import {
 } from 'src/js/createTree';
 
 // Creating table
-processData(familyData);
+processData(familyData, { familyNameId: 0, memberId: 2 });
 
 const dimensions = {
   width: 1200,
