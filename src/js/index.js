@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 
 import familyData from 'family-tree.json';
-import processData from 'src/js/processData';
+import processData, { isPartnerOfChildren } from 'src/js/processData';
 
 import {
   getPointsMiddle,
@@ -11,7 +11,9 @@ import {
 } from 'src/js/createTree';
 
 // Creating table
-processData(familyData, { familyNameId: 0, memberId: 2 });
+const data = processData(familyData, { familyNameId: 0, memberId: 0 });
+console.log('data', data)
+console.log(isPartnerOfChildren(data[0], data[1]))
 
 const dimensions = {
   width: 1200,
