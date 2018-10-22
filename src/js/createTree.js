@@ -1,10 +1,11 @@
 import * as d3 from 'd3';
 
-const getTranslateString = (x, y = x) => {
+const getTranslateString = (x, y) => {
   return 'translate(' + x + ',' + y + ')';
 };
 
 const appendLine = ({ svg, dimensions, color = '#000', points }) => {
+  const { paddingLeft, paddingTop  } = dimensions;
   const curveLineGenerator = d3.line().curve(d3.curveBundle);
 
   const pathData = curveLineGenerator(points);
@@ -14,7 +15,7 @@ const appendLine = ({ svg, dimensions, color = '#000', points }) => {
     .attr('fill', 'none')
     .attr('stroke', color)
     .attr('stroke-width', 4)
-    .attr('transform', getTranslateString(dimensions.padding));
+    .attr('transform', getTranslateString(paddingLeft, paddingTop ));
 };
 
 const appendText = ({
@@ -27,11 +28,12 @@ const appendText = ({
 }) => {
   const x = point[0] - width / 2 + 10;
   const y = point[1] + padding;
+  const { paddingLeft, paddingTop  } = dimensions;
   return svg.append('text')
     .text(text)
     .attr('x', x)
     .attr('y', y)
-    .attr('transform', getTranslateString(dimensions.padding))
+    .attr('transform', getTranslateString(paddingLeft, paddingTop ))
     .attr('class', 'text');
 };
 
@@ -112,6 +114,7 @@ const appendRect = ({
   width,
   dimensions,
 }) => {
+  const { paddingLeft, paddingTop  } = dimensions;
   const x = point[0] - width / 2;
   const y = point[1] - 20;
 
@@ -122,7 +125,7 @@ const appendRect = ({
     .attr('y', y)
     .attr('width', width)
     .attr('height', height)
-    .attr('transform', getTranslateString(dimensions.padding))
+    .attr('transform', getTranslateString(paddingLeft, paddingTop ))
     .attr('class', 'text-container');
 }; // appendRect
 

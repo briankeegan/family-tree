@@ -8,7 +8,7 @@ const getExistingMembers = (members, families) => (
   members.filter(memberIds => getMember(memberIds, families).fullName)
 );
 
-const processData = (
+const getDepthObj = (
   { families },
   targetIds
 ) => {
@@ -26,11 +26,16 @@ const processData = (
   };
 
   const target = getMember(targetIds, families);
-
   const childrenDepth = getDepth(targetIds, 'children');
   const parentDepth = Math.max(...[targetIds, ...target.partners]
     .map(ids => getDepth(ids, 'parents')));
+    return { childrenDepth, parentDepth };
+};
 
+const processData = (
+  { families },
+  targetIds
+) => {
 
   const getParentsRecursively = (parentsIds) => {
     const { fullName, parents, memberId } = getMember(parentsIds, families);
@@ -87,10 +92,10 @@ const processData = (
 };
 
 // long term, should determine which childre are shared... from which partners
-export const isPartnerOfChildren = (member, partner) => {
+const isPartnerOfChildren = (member, partner) => {
   return member.children.every((child, i) => {
     return child.memberId === partner.children[i].memberId;
   });
 };
 
-export default processData;
+export { processData, getDepthObj, isPartnerOfChildren };

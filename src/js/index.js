@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 
 import familyData from 'family-tree.json';
-import processData, { isPartnerOfChildren } from 'src/js/processData';
+import { processData, getDepthObj, isPartnerOfChildren } from 'src/js/processData';
 
 import {
   getPointsMiddle,
@@ -14,11 +14,14 @@ import {
 const data = processData(familyData, { familyNameId: 0, memberId: 0 });
 console.log('data', data)
 console.log(isPartnerOfChildren(data[0], data[1]))
+console.log('getDepthObj', getDepthObj(familyData, { familyNameId: 0, memberId: 0 }))
 
 const dimensions = {
-  width: 1200,
+  width: 1600,
   height: 800,
-  padding: 80
+  paddingTop: 50,
+  paddingLeft: 90,
+  paddingRight: 90 * 2
 };
 
 const mistySvg = d3.select('.john-misty')
@@ -27,7 +30,7 @@ const mistySvg = d3.select('.john-misty')
 
 
 const parent1 = [0, 0];
-const parent2 = [600, 0];
+const parent2 = [dimensions.width - dimensions.paddingRight, 0, 0];
 
 
 const child1 = [0, 400];
