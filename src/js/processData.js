@@ -1,22 +1,23 @@
+const getMember = ({ familyNameId, memberId }, families) => {
+  const family = families.find(family => family.familyNameId === familyNameId);
+  const member = (family.members || []).find(member => member.memberId === memberId);
+  return member || {};
+};
+
+const getExistingMembers = (members, families) => (
+  members.filter(memberIds => getMember(memberIds, families).fullName)
+);
+
 const processData = (
   { families },
   targetIds
 ) => {
-  const getMember = ({ familyNameId, memberId }) => {
-    const family = (families || []).find(family => family.familyNameId === familyNameId);
-    const member = (family.members || []).find(member => member.memberId === memberId);
-    return member || {};
-  };
-
-  const getExistingMembers = members => (
-    members.filter(memberIds => getMember(memberIds).fullName)
-  );
 
   const getDepth = (targetIds, type) => {
     const getDepthRecursively = (targetIds) => {
-      const member = getMember(targetIds);
+      const member = getMember(targetIds, families);
       if ((member[type] || []).length) {
-        const existingMembers = getExistingMembers(member[type]);
+        const existingMembers = getExistingMembers(member[type], families);
         return Math.max(...existingMembers.map(getDepthRecursively)) + 1;
       }
       return 0;
@@ -24,7 +25,7 @@ const processData = (
     return getDepthRecursively(targetIds);
   };
 
-  const target = getMember(targetIds);
+  const target = getMember(targetIds, families);
 
   const childrenDepth = getDepth(targetIds, 'children');
   const parentDepth = Math.max(...[targetIds, ...target.partners]
@@ -32,10 +33,10 @@ const processData = (
 
 
   const getParentsRecursively = (parentsIds) => {
-    const { fullName, parents, memberId } = getMember(parentsIds);
+    const { fullName, parents, memberId } = getMember(parentsIds, families);
     const parent = { fullName, memberId };
     if ((parents || []).length) {
-      const existingParents = getExistingMembers(parents);
+      const existingParents = getExistingMembers(parents, families);
       if (existingParents.length) {
         parent.parents = existingParents.map(getParentsRecursively);
       }
@@ -44,10 +45,10 @@ const processData = (
   };
 
   const getChildrenRecursively = (childIds) => {
-    const { fullName, children, memberId } = getMember(childIds);
+    const { fullName, children, memberId } = getMember(childIds, families);
     const child = { fullName, memberId };
     if ((children || []).length) {
-      const existingChildren = getExistingMembers(children);
+      const existingChildren = getExistingMembers(children, families);
       if (existingChildren.length) {
         child.children = existingChildren.map(getParentsRecursively);
       }
@@ -56,7 +57,7 @@ const processData = (
   };
 
   const getFamilyObj = () => {
-    const target = getMember(targetIds);
+    const target = getMember(targetIds, families);
     const { fullName, parents, children, memberId } = target;
     const targetMember = { fullName, memberId };
     if (parents && parents.length) {
@@ -65,15 +66,15 @@ const processData = (
     if (children && children.length) {
       targetMember.children = children.map(getChildrenRecursively);
     }
-    const partners = getExistingMembers(target.partners).map(partnerIds => {
-      const { fullName, parents, children, memberId } = getMember(partnerIds);
+    const partners = getExistingMembers(target.partners, families).map(partnerIds => {
+      const { fullName, parents, children, memberId } = getMember(partnerIds, families);
       const partner = { fullName, memberId };
       if (parents) {
         partner.parents = parents.map(getParentsRecursively);
       }
       if (children && children.length) {
         partner.children = children.map(child => {
-          const { memberId, fullName } = getMember(child);
+          const { memberId, fullName } = getMember(child, families);
           return { memberId, fullName  };
         });
       }
