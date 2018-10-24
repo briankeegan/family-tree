@@ -20,38 +20,28 @@ const dimensions = {
   paddingRight: 90 * 2
 };
 
-const zoom = d3.zoom();
+
+var zoomListener = d3.zoom()
+  .scaleExtent([0.2, 2])
+  .on('zoom', zoomHandler);
+
 
 const svg = d3.select('.john-misty')
-  .call(zoom2)
-  .append('g');
+  .call(zoomListener);
 
-function zoom2(selection) {
-  selection.call(d3.zoom()
-    .scaleExtent([0.2, 2])
-    .on('zoom', zoomed));
+const content = svg.append('g')
+  .attr('transform', 'translate(0, 0) scale(1)');
+
+function zoomHandler() {
+  const {x, y, k} = d3.event.transform;
+  d3.select(this).select('g').attr('transform', `translate(${x},${y}) scale(${k})`);
 }
 
-// function zoom() {
-//   return d3.zoom()
-//     .scaleExtent([0.2, 2])
-//     .on('zoom', zoomed);
-// }
-
-
-
-function zoomed() {
-  svg.attr('transform', d3.event.transform);
+function reset() {
+  svg.call(zoomListener.transform, d3.zoomIdentity);
 }
-
-const resetSvgPosition = () => {
-  //   .scaleTo(1);
-  console.log(zoom.transform)
-  console.log(d3.zoomIdentity)
-  // svg.call(zoom.transform, d3.zoomIdentity);
-};
 
 d3.select('.reset')
-  .on('click', resetSvgPosition);
+  .on('click', reset);
 
-positionElements(dimensions, svg);
+positionElements(dimensions, content);
