@@ -1,5 +1,5 @@
 svg {
-  background: #ddd;
+  /* background: #ddd; */
 }
 
 .text-container {
@@ -46,4 +46,10 @@ svg {
   fill: none;
   stroke: #ccc;
   stroke-width: 2px;
+}
+
+.john-misty {
+    position: fixed;
+    height: 900px;
+    width: 100%;
 }
