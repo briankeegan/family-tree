@@ -146,4 +146,5 @@ export {
   appendLine,
   createPointsLine,
   appendTextBox,
+  getTranslateString
 };
