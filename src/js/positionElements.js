@@ -18,11 +18,12 @@ const positionElements = (dimensions, svg, familyData) => {
   const middleX = width / 2;
   const middleY = 300;
   const spaceBetween = boxWidth + 100;
+  const childrenPadding = 10;
 
   const props = { svg, dimensions, color: 'black', points: [], width: boxWidth };
 
   const isEven = (number) => {
-    return !!(number % 2);
+    return !(number % 2);
   };
 
   const getMiddleIndex = (number) => {
@@ -30,19 +31,23 @@ const positionElements = (dimensions, svg, familyData) => {
   };
 
   const renderChildren = (children, parentsPoint = 'preachy') => {
-    if (children && isEven(children.length)) {
-      console.log('Yaye!')
-    } else {
-      const middle = getMiddleIndex(children.length);
-      
-    }
+    const len = children.length;
+    (children || []).forEach((child, i) => {
+      const padding = boxWidth + childrenPadding;
+      const x = parentsPoint[0];
+      const offset = x - padding * (len - 1) / 2;
+      const y = parentsPoint[1];
+      const childPoints = [offset + i * padding, y + 200];
+
+      appendLine({ ...props, points: createPointsLine(parentsPoint, childPoints) });
+      appendTextBox({ ...props, point: childPoints, textArray: [child.fullName] });
+    });
   };
 
   const createTarget = () => {
     // To do: allow for more than one partner || allow different combos.
     const target = { ...data[0] };
     if (data.length > 1) {
-
       const targetPartner = { ...data[1] };
       target.points = [middleX - spaceBetween, middleY];
       targetPartner.points = [middleX + spaceBetween - dimensions.paddingRight, middleY];
