@@ -3,14 +3,13 @@ import * as d3 from 'd3';
 import familyData from 'family-tree.json';
 
 import positionElements from 'src/js/positionElements';
-import { processData, getDepthObj, isPartnerOfChildren } from 'src/js/processData';
-import { getTranslateString } from 'src/js/createTree';
-
-// Creating table
-const data = processData(familyData, { familyNameId: 0, memberId: 0 });
-console.log('data', data)
-console.log(isPartnerOfChildren(data[0], data[1]))
-console.log('getDepthObj', getDepthObj(familyData, { familyNameId: 0, memberId: 0 }))
+// import { processData, getDepthObj, isPartnerOfChildren } from 'src/js/processData';
+//
+// // Creating table
+// const data = processData(familyData, { familyNameId: 0, memberId: 0 });
+// console.log('data', data)
+// console.log(isPartnerOfChildren(data[0], data[1]))
+// console.log('getDepthObj', getDepthObj(familyData, { familyNameId: 0, memberId: 0 }))
 
 const dimensions = {
   width: 1600,
@@ -44,4 +43,4 @@ function reset() {
 d3.select('.reset')
   .on('click', reset);
 
-positionElements(dimensions, content);
+positionElements(dimensions, content, familyData);

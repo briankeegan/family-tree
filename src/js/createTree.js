@@ -145,6 +145,5 @@ export {
   getPointsMiddle,
   appendLine,
   createPointsLine,
-  appendTextBox,
-  getTranslateString
+  appendTextBox
 };
