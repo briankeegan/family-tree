@@ -4,7 +4,7 @@ const getTranslateString = (x, y) => {
   return 'translate(' + x + ',' + y + ')';
 };
 
-const appendLine = ({ svg, dimensions, color = '#000', points }) => {
+const appendLine = ({ svg, dimensions, points }) => {
   const { paddingLeft, paddingTop  } = dimensions;
   const curveLineGenerator = d3.line().curve(d3.curveBundle);
 
@@ -13,9 +13,8 @@ const appendLine = ({ svg, dimensions, color = '#000', points }) => {
   svg.append('path')
     .attr('d', pathData)
     .attr('fill', 'none')
-    .attr('stroke', color)
-    .attr('stroke-width', 4)
-    .attr('transform', getTranslateString(paddingLeft, paddingTop ));
+    .attr('transform', getTranslateString(paddingLeft, paddingTop ))
+    .attr('class', 'connecting-line');
 };
 
 const appendText = ({

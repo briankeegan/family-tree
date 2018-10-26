@@ -1,3 +1,5 @@
+import * as d3 from 'd3';
+
 import {
   getPointsMiddle,
   appendLine,
@@ -7,11 +9,12 @@ import {
 
 import { processData } from 'src/js/processData';
 
+const lines = [];
+const textBoxes = [];
+
 
 const positionElements = (dimensions, svg, familyData) => {
-  const data = processData(familyData, { familyNameId: 0, memberId: 1 });
-
-  console.log('data', data)
+  const data = processData(familyData, { familyNameId: 0, memberId: 0 });
 
   const { width } = dimensions;
   const boxWidth = 200;
@@ -20,27 +23,21 @@ const positionElements = (dimensions, svg, familyData) => {
   const spaceBetween = boxWidth + 100;
   const childrenPadding = 10;
 
-  const props = { svg, dimensions, color: 'black', points: [], width: boxWidth };
-
-  const isEven = (number) => {
-    return !(number % 2);
-  };
-
-  const getMiddleIndex = (number) => {
-    return Math.floor(number.length / 2);
-  };
+  const props = { svg, dimensions, points: [], width: boxWidth };
 
   const renderChildren = (children, parentsPoint = 'preachy') => {
-    const len = children.length;
     (children || []).forEach((child, i) => {
       const padding = boxWidth + childrenPadding;
       const x = parentsPoint[0];
-      const offset = x - padding * (len - 1) / 2;
+      const offset = x - padding * (children.length - 1) / 2;
       const y = parentsPoint[1];
       const childPoints = [offset + i * padding, y + 200];
 
-      appendLine({ ...props, points: createPointsLine(parentsPoint, childPoints) });
-      appendTextBox({ ...props, point: childPoints, textArray: [child.fullName] });
+      lines.push({ ...props, points: createPointsLine(parentsPoint, childPoints) });
+      textBoxes.push({ ...props, point: childPoints, textArray: [child.fullName] });
+      if (child.children) {
+        renderChildren(child.children, childPoints);
+      }
     });
   };
 
@@ -53,22 +50,25 @@ const positionElements = (dimensions, svg, familyData) => {
       targetPartner.points = [middleX + spaceBetween - dimensions.paddingRight, middleY];
       const middle = getPointsMiddle(target.points, targetPartner.points);
 
-      appendLine({ ...props, points: [target.points, targetPartner.points] });
-      appendTextBox({ ...props, point: target.points, textArray: [target.fullName] });
-      appendTextBox({ ...props, point: targetPartner.points, textArray: [targetPartner.fullName] });
+      lines.push({ ...props, points: [target.points, targetPartner.points] });
+      textBoxes.push({ ...props, point: target.points, textArray: [target.fullName] });
+      textBoxes.push({ ...props, point: targetPartner.points, textArray: [targetPartner.fullName] });
 
       renderChildren(target.children, middle);
     } else {
       target.points = [middleX, middleY];
       const middle = target.points;
 
-      appendTextBox({ ...props, point: target.points, textArray: [target.fullName] });
+      textBoxes.push({ ...props, point: target.points, textArray: [target.fullName] });
 
       renderChildren(target.children, middle);
     }
   };
 
   createTarget();
+
+  lines.forEach(line => appendLine(line));
+  textBoxes.forEach(textBox => appendTextBox(textBox));
 
   // const parent1 = [middleX - spaceBetween, middleY];
   // const parent2 = [middleX + spaceBetween - dimensions.paddingRight, middleY];
