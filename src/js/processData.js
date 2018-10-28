@@ -55,7 +55,7 @@ const processData = (
     if ((children || []).length) {
       const existingChildren = getExistingMembers(children, families);
       if (existingChildren.length) {
-        child.children = existingChildren.map(getParentsRecursively);
+        child.children = existingChildren.map(getChildrenRecursively);
       }
     }
     return child;
@@ -79,8 +79,8 @@ const processData = (
       }
       if (children && children.length) {
         partner.children = children.map(child => {
-          const { memberId, fullName } = getMember(child, families);
-          return { memberId, fullName  };
+          const { memberId, fullName, children } = getMember(child, families);
+          return { memberId, fullName };
         });
       }
       return partner;

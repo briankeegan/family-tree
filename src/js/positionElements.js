@@ -26,19 +26,33 @@ const positionElements = (dimensions, svg, familyData) => {
   const props = { svg, dimensions, points: [], width: boxWidth };
 
   const renderChildren = (children, parentsPoint = 'preachy') => {
-    (children || []).forEach((child, i) => {
+    const points = (children || []).map((child, i) => {
       const padding = boxWidth + childrenPadding;
       const x = parentsPoint[0];
       const offset = x - padding * (children.length - 1) / 2;
       const y = parentsPoint[1];
-      const childPoints = [offset + i * padding, y + 200];
+      let childPoints = [offset + i * padding, y + 200];
+
+      if (child.children) {
+        const offsetLength = child.children.length + renderChildren(child.children, childPoints);
+        console.log(offsetLength)
+        if (i !== 0) {
+          childPoints[0] = childPoints[0] + (offsetLength / 2) * 200
+        }
+        if (i + 1 === children.length) {
+          // children[i]childPoints[0] = childPoints[0] + (offsetLength / 2) * 200
+        }
+      }
+
 
       lines.push({ ...props, points: createPointsLine(parentsPoint, childPoints) });
       textBoxes.push({ ...props, point: childPoints, textArray: [child.fullName] });
-      if (child.children) {
-        renderChildren(child.children, childPoints);
-      }
+
     });
+    return (children || []).reduce((tot, child) => {
+      const { children } = child;
+      return (children || []).length ? tot + children.length : tot;
+    }, 0);
   };
 
   const createTarget = () => {
@@ -66,6 +80,19 @@ const positionElements = (dimensions, svg, familyData) => {
   };
 
   createTarget();
+
+
+  // let i = 0;
+  // function timeout() {
+  //   setTimeout(function () {
+  //     appendLine(lines[i]);
+  //     appendTextBox(textBoxes[i]);
+  //     if (++i < lines.length) {
+  //       timeout();
+  //     }
+  //   }, 200);
+  // }
+  // timeout();
 
   lines.forEach(line => appendLine(line));
   textBoxes.forEach(textBox => appendTextBox(textBox));

@@ -10,11 +10,22 @@ const appendLine = ({ svg, dimensions, points }) => {
 
   const pathData = curveLineGenerator(points);
 
-  svg.append('path')
+  const path = svg.append('path')
     .attr('d', pathData)
     .attr('fill', 'none')
     .attr('transform', getTranslateString(paddingLeft, paddingTop ))
-    .attr('class', 'connecting-line');
+    .attr('class', 'connecting-line')
+
+  var totalLength = path.node().getTotalLength();
+
+
+  path
+    .attr("stroke-dasharray", totalLength + " " + totalLength)
+    .attr("stroke-dashoffset", totalLength)
+    .transition()
+    .duration(500)
+    .ease(d3.easeLinear)
+    .attr("stroke-dashoffset", 0);
 };
 
 const appendText = ({
@@ -44,7 +55,15 @@ const appendTextWrap = (props) => {
     ...props,
     text: phrase,
     padding: lineNumber.increment() * 20
-  });
+  })
+
+  textWrap.attr('opacity', 0);
+
+  textWrap
+    .transition()
+    .duration(500)
+    .ease(d3.easeLinear)
+    .attr('opacity', 1);
   while (words.length > 0) {
     let word = words.shift();
     textWrap.node().textContent = `${phrase} ${word}`;
@@ -103,6 +122,14 @@ const appendTextBox = ({
   });
   const height = lineNumber.current * 20 + 10;
   container.attr('height', height);
+
+  container.attr('opacity', 0);
+
+  container
+    .transition()
+    .duration(500)
+    .ease(d3.easeLinear)
+    .attr('opacity', 1);
 
 };
 
