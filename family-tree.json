@@ -131,6 +131,7 @@
           "children": [
             { "familyNameId": 0, "memberId": 9 },
             { "familyNameId": 0, "memberId": 10 },
+            { "familyNameId": 0, "memberId": 11 },
             { "familyNameId": 0, "memberId": 11 }
           ]
         },
@@ -146,6 +147,8 @@
             { "familyNameId": 2, "memberId": 1 }
           ],
           "children": [
+            { "familyNameId": 0, "memberId": 9 },
+            { "familyNameId": 0, "memberId": 10 }
           ]
         },
         {
@@ -159,6 +162,8 @@
             { "familyNameId": 0, "memberId": 7 }
           ],
           "children": [
+            { "familyNameId": 0, "memberId": 10 },
+            { "familyNameId": 0, "memberId": 10 }
           ]
         },
         {
@@ -185,6 +190,8 @@
             { "familyNameId": 0, "memberId": 7 }
           ],
           "children": [
+            { "familyNameId": 0, "memberId": 9 },
+            { "familyNameId": 0, "memberId": 10 }
           ]
         }
       ]

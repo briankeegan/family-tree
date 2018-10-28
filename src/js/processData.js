@@ -8,10 +8,7 @@ const getExistingMembers = (members, families) => (
   members.filter(memberIds => getMember(memberIds, families).fullName)
 );
 
-const getDepthObj = (
-  { families },
-  targetIds
-) => {
+const getDepthObj = ({ families }, targetIds) => {
 
   const getDepth = (targetIds, type) => {
     const getDepthRecursively = (targetIds) => {
@@ -29,7 +26,19 @@ const getDepthObj = (
   const childrenDepth = getDepth(targetIds, 'children');
   const parentDepth = Math.max(...[targetIds, ...target.partners]
     .map(ids => getDepth(ids, 'parents')));
-    return { childrenDepth, parentDepth };
+  return { childrenDepth, parentDepth };
+};
+
+const getChildrenOffset = ({ families }, targetIds) => {
+  const getDepthRecursively = (targetIds) => {
+    const member = getMember(targetIds, families);
+    if ((member.children || []).length) {
+      const existingMembers = getExistingMembers(member.children, families);
+      return existingMembers.reduce((t, m) => t + getDepthRecursively(m), 0) + member.children.length - 1;
+    }
+    return 0;
+  };
+  return getDepthRecursively(targetIds);
 };
 
 const processData = (
@@ -61,6 +70,7 @@ const processData = (
     return child;
   };
 
+
   const getFamilyObj = () => {
     const target = getMember(targetIds, families);
     const { fullName, parents, children, memberId } = target;
@@ -79,7 +89,7 @@ const processData = (
       }
       if (children && children.length) {
         partner.children = children.map(child => {
-          const { memberId, fullName, children } = getMember(child, families);
+          const { memberId, fullName } = getMember(child, families);
           return { memberId, fullName };
         });
       }
@@ -98,4 +108,4 @@ const isPartnerOfChildren = (member, partner) => {
   });
 };
 
-export { processData, getDepthObj, isPartnerOfChildren };
+export { processData, getDepthObj, isPartnerOfChildren, getChildrenOffset };

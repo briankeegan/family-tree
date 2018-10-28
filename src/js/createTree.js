@@ -20,12 +20,15 @@ const appendLine = ({ svg, dimensions, points }) => {
 
 
   path
-    .attr("stroke-dasharray", totalLength + " " + totalLength)
-    .attr("stroke-dashoffset", totalLength)
+    .attr('stroke-dasharray', `${totalLength} ${totalLength}`)
+    .attr('stroke-dashoffset', totalLength)
+    .attr('opacity', 0.2)
     .transition()
     .duration(500)
     .ease(d3.easeLinear)
-    .attr("stroke-dashoffset", 0);
+    .attr('stroke-dashoffset', 0)
+    .attr('opacity', 1);
+
 };
 
 const appendText = ({
@@ -160,11 +163,11 @@ const getPointsMiddle = (point1, point2) => (
 );
 
 const getCurve = (start, end) => (
-  [end[0], (start[1] + end[1] + 150) / 2]
+  [end[0], (start[1] + end[1] + 50) / 2]
 );
 
 const createPointsLine = (middle, end) => (
-  [middle, [middle[0], middle[1] + 150], getCurve(middle, end), end]
+  [middle, [middle[0], middle[1] + 50], getCurve(middle, end), end]
 );
 
 export {

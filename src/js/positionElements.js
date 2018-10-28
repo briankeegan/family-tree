@@ -7,14 +7,15 @@ import {
   appendTextBox,
 } from 'src/js/createTree';
 
-import { processData } from 'src/js/processData';
+import { processData, getChildrenOffset } from 'src/js/processData';
 
 const lines = [];
 const textBoxes = [];
 
 
-const positionElements = (dimensions, svg, familyData) => {
-  const data = processData(familyData, { familyNameId: 0, memberId: 0 });
+const positionElements = (dimensions, svg, familyData, member) => {
+  const data = processData(familyData, member);
+  const  { familyNameId } = member;
 
   const { width } = dimensions;
   const boxWidth = 200;
@@ -25,34 +26,45 @@ const positionElements = (dimensions, svg, familyData) => {
 
   const props = { svg, dimensions, points: [], width: boxWidth };
 
+  const _getChildrenOffset = (memberId) => {
+    return getChildrenOffset(familyData, { familyNameId, memberId })
+  }
+
+
+// lines.push({ ...props, points: createPointsLine(parentsPoint, childPoints) });
+// textBoxes.push({ ...props, point: childPoints, textArray: [child.fullName] });
+
   const renderChildren = (children, parentsPoint = 'preachy') => {
+    let rowOffset = (children || []).reduce((tot, child) => {
+      return tot + _getChildrenOffset(child.memberId);
+    }, 0);
+    let curOffset = 0;
     const points = (children || []).map((child, i) => {
       const padding = boxWidth + childrenPadding;
       const x = parentsPoint[0];
-      const offset = x - padding * (children.length - 1) / 2;
-      const y = parentsPoint[1];
-      let childPoints = [offset + i * padding, y + 200];
-
-      if (child.children) {
-        const offsetLength = child.children.length + renderChildren(child.children, childPoints);
-        console.log(offsetLength)
-        if (i !== 0) {
-          childPoints[0] = childPoints[0] + (offsetLength / 2) * 200
-        }
-        if (i + 1 === children.length) {
-          // children[i]childPoints[0] = childPoints[0] + (offsetLength / 2) * 200
-        }
+      let offset = x - padding * ((children.length - 1 + rowOffset + curOffset)) / 2;
+      if (child.memberId === 7 || child.memberId === 8) {
+        console.log(child.fullName, curOffset);
+        let offset2 = x - padding * ((children.length - 1 + rowOffset + curOffset)) / 2;
+        console.log(offset2)
       }
-
-
-      lines.push({ ...props, points: createPointsLine(parentsPoint, childPoints) });
-      textBoxes.push({ ...props, point: childPoints, textArray: [child.fullName] });
-
+      // let offset = x - padding * ((children.length - 1) + rowOffset + curOffset) / 2;
+      const y = parentsPoint[1];
+      const childrenOffset = _getChildrenOffset(child.memberId);
+      if (childrenOffset) {
+        curOffset -= childrenOffset * 2;
+        offset += padding * childrenOffset / 2;
+        // console.log(child.fullName, offset);
+      }
+      return [offset + i * padding, y + 200];
     });
-    return (children || []).reduce((tot, child) => {
-      const { children } = child;
-      return (children || []).length ? tot + children.length : tot;
-    }, 0);
+    (children || []).forEach((child, i) => {
+      lines.push({ ...props, points: createPointsLine(parentsPoint, points[i]) });
+      textBoxes.push({ ...props, point: points[i], textArray: [child.fullName]});
+      if (child.children) {
+        renderChildren(child.children, points[i]);
+      }
+    });
   };
 
   const createTarget = () => {
@@ -96,6 +108,8 @@ const positionElements = (dimensions, svg, familyData) => {
 
   lines.forEach(line => appendLine(line));
   textBoxes.forEach(textBox => appendTextBox(textBox));
+
+  console.log(data)
 
   // const parent1 = [middleX - spaceBetween, middleY];
   // const parent2 = [middleX + spaceBetween - dimensions.paddingRight, middleY];
