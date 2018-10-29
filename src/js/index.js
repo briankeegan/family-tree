@@ -43,4 +43,4 @@ function reset() {
 d3.select('.reset')
   .on('click', reset);
 
-positionElements(dimensions, content, familyData, { familyNameId: 0, memberId: 0 });
+positionElements(dimensions, content, familyData, { familyNameId: 0, memberId: 1 });

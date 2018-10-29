@@ -134,6 +134,7 @@ const appendTextBox = ({
     .ease(d3.easeLinear)
     .attr('opacity', 1);
 
+  return container;
 };
 
 const appendRect = ({
