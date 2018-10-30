@@ -31,16 +31,13 @@ const positionElements = (dimensions, svg, familyData, member) => {
 
 
   const renderChildren = (children, parentsPoint = 'preachy') => {
-    let rowOffset = (children || []).reduce((tot, child) => {
-      return tot + _getChildrenOffset(child.ids);
-    }, 0);
     let curOffset = 0;
     const points = (children || []).map((child, i) => {
       const padding = boxWidth + childrenPadding;
       const x = parentsPoint[0];
-      let offset = x - padding * (children.length - 1 + rowOffset + curOffset) / 2;
+      let offset = x - padding * (children.length - 1 + curOffset) / 2;
       const y = parentsPoint[1];
-      const childrenOffset = _getChildrenOffset(child.ids);
+      let childrenOffset = _getChildrenOffset(child.ids);
       if (childrenOffset) {
         curOffset -= childrenOffset * 2;
         offset += padding * childrenOffset / 2;
@@ -50,14 +47,14 @@ const positionElements = (dimensions, svg, familyData, member) => {
     (children || []).forEach((child, i) => {
       const { fullName, ids } = child;
       lines.push({ ...props, points: createPointsLine(parentsPoint, points[i]) });
-      textBoxes.push({ ...props, point: points[i], ids, textArray: [fullName]});
+      textBoxes.push({ ...props, point: points[i], ids, textArray: [fullName] });
       if (child.children) {
         renderChildren(child.children, points[i]);
       }
     });
   };
 
-//  coupledOffset is quickfix. Should be refactored
+  //  coupleOffset is quickfix. Should be refactored
   const renderParents = (parents, originPoints, depth = 0, coupleOffset = 0) => {
     let duplicateOffset = 0;
     const points = (parents || []).map((parent, i) => {
@@ -117,7 +114,6 @@ const positionElements = (dimensions, svg, familyData, member) => {
     }
   };
 
-  console.log(data)
   createTarget();
 
   lines.forEach(line => appendLine(line));

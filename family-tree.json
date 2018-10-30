@@ -167,6 +167,34 @@
             { "familyNameId": 0, "memberId": 6 }
           ],
           "children": [
+            { "familyNameId": 0, "memberId": 12 },
+            { "familyNameId": 0, "memberId": 13 }
+          ]
+        },
+        {
+          "fullName": "Lorm Keegan",
+          "firstName": "Thomas",
+          "middleName": "Augustus",
+          "memberId": 12,
+          "partners": [
+          ],
+          "parents": [
+            { "familyNameId": 0, "memberId": 11 }
+          ],
+          "children": [
+          ]
+        },
+        {
+          "fullName": "Igor  Keegan",
+          "firstName": "Thomas",
+          "middleName": "Augustus",
+          "memberId": 13,
+          "partners": [
+          ],
+          "parents": [
+            { "familyNameId": 0, "memberId": 11 }
+          ],
+          "children": [
           ]
         }
       ]
