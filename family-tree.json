@@ -19,10 +19,6 @@
               "familyNameId": 0,
               "memberId": 1
             }
-          ],
-          "parents": [
-            { "familyNameId": 4, "memberId": 0 },
-            { "familyNameId": 5, "memberId": 0 }
           ]
         },
         {
@@ -46,8 +42,7 @@
             { "familyNameId": 0, "memberId": 4 },
             { "familyNameId": 0, "memberId": 5 },
             { "familyNameId": 0, "memberId": 6 },
-            { "familyNameId": 0, "memberId": 7 },
-            { "familyNameId": 0, "memberId": 8 }
+            { "familyNameId": 0, "memberId": 7 }
           ]
         },
         {
@@ -116,6 +111,8 @@
             { "familyNameId": 2, "memberId": 1 }
           ],
           "children": [
+            { "familyNameId": 0, "memberId": 10 },
+            { "familyNameId": 0, "memberId": 11 }
           ]
         },
         {
@@ -130,10 +127,6 @@
             { "familyNameId": 2, "memberId": 1 }
           ],
           "children": [
-            { "familyNameId": 0, "memberId": 9 },
-            { "familyNameId": 0, "memberId": 10 },
-            { "familyNameId": 0, "memberId": 11 },
-            { "familyNameId": 0, "memberId": 11 }
           ]
         },
         {
@@ -148,51 +141,32 @@
             { "familyNameId": 2, "memberId": 1 }
           ],
           "children": [
-            { "familyNameId": 0, "memberId": 9 },
-            { "familyNameId": 0, "memberId": 10 }
           ]
         },
         {
-          "fullName": "Child1 Keegan",
-          "firstName": "Thomas",
-          "middleName": "Augustus",
-          "memberId": 9,
-          "partners": [
-          ],
-          "parents": [
-            { "familyNameId": 0, "memberId": 7 }
-          ],
-          "children": [
-            { "familyNameId": 0, "memberId": 10 },
-            { "familyNameId": 0, "memberId": 10 }
-          ]
-        },
-        {
-          "fullName": "Child2 Keegan",
-          "firstName": "Thomas",
+          "fullName": "Fredrick Keegan",
+          "firstName": "Fred",
           "middleName": "Augustus",
           "memberId": 10,
           "partners": [
           ],
           "parents": [
-            { "familyNameId": 0, "memberId": 7 }
+            { "familyNameId": 0, "memberId": 6 }
           ],
           "children": [
           ]
         },
         {
-          "fullName": "Child3 Keegan",
+          "fullName": "Igor  Keegan",
           "firstName": "Thomas",
           "middleName": "Augustus",
           "memberId": 11,
           "partners": [
           ],
           "parents": [
-            { "familyNameId": 0, "memberId": 7 }
+            { "familyNameId": 0, "memberId": 6 }
           ],
           "children": [
-            { "familyNameId": 0, "memberId": 9 },
-            { "familyNameId": 0, "memberId": 10 }
           ]
         }
       ]
@@ -216,10 +190,6 @@
               "familyNameId": 0,
               "memberId": 1
             }
-          ],
-          "parents": [
-            { "familyNameId": 4, "memberId": 0 },
-            { "familyNameId": 5, "memberId": 0 }
           ]
         }
       ]
@@ -243,10 +213,6 @@
               "familyNameId": 2,
               "memberId": 1
             }
-          ],
-          "parents": [
-            { "familyNameId": 4, "memberId": 0 },
-            { "familyNameId": 5, "memberId": 0 }
           ]
         },
         {
@@ -294,115 +260,7 @@
               "familyNameId": 2,
               "memberId": 1
             }
-          ],
-          "parents": [
-            { "familyNameId": 4, "memberId": 0 },
-            { "familyNameId": 5, "memberId": 0 }
           ]
-        }
-      ]
-    },
-    {
-      "familyName": "Hollywood",
-      "familyNameId": 4,
-      "members": [
-        {
-          "fullName": "Paul Hollywood",
-          "firstName": "?",
-          "middleName": "Ann",
-          "memberId": 0,
-          "partners": [
-            {
-            }
-          ],
-          "children": [
-            {
-            }
-          ],
-        "parents": [
-          { "familyNameId": 6, "memberId": 0 },
-          { "familyNameId": 7, "memberId": 0 }
-        ]
-        }
-      ]
-    },
-    {
-      "familyName": "Marry Barry",
-      "familyNameId": 5,
-      "members": [
-        {
-          "fullName": "Marry Barry",
-          "firstName": "?",
-          "middleName": "Ann",
-          "memberId": 0,
-          "partners": [
-            {
-            }
-          ],
-          "children": [
-            {
-            }
-          ],
-          "parents": [
-            { "familyNameId": 6, "memberId": 0 },
-            { "familyNameId": 7, "memberId": 0 }
-          ]
-        }
-      ]
-    },
-    {
-      "familyName": "Sue",
-      "familyNameId": 6,
-      "members": [
-        {
-          "fullName": "Sue",
-          "firstName": "?",
-          "middleName": "Ann",
-          "memberId": 0
-        }
-      ],
-      "parents": [
-        { "familyNameId": 9, "memberId": 0 },
-        { "familyNameId": 10, "memberId": 0 }
-      ]
-    },
-    {
-      "familyName": "Mel",
-      "familyNameId": 7,
-      "members": [
-        {
-          "fullName": "Mel",
-          "firstName": "?",
-          "middleName": "Ann",
-          "memberId": 0
-        }
-      ],
-    "parents": [
-      { "familyNameId": 9, "memberId": 0 },
-      { "familyNameId": 10, "memberId": 0 }
-    ]
-    },
-    {
-      "familyName": "Frank",
-      "familyNameId": 9,
-      "members": [
-        {
-          "fullName": "Frank",
-          "firstName": "?",
-          "middleName": "Ann",
-          "memberId": 0
-        }
-      ]
-    },
-    {
-      "familyName": "Rook",
-      "familyNameId": 10,
-      "members": [
-        {
-          "fullName": "Sue",
-          "firstName": "?",
-          "middleName": "Ann",
-          "memberId": 0
         }
       ]
     }

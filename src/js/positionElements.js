@@ -15,7 +15,6 @@ let textBoxes = [];
 
 const positionElements = (dimensions, svg, familyData, member) => {
   const data = processData(familyData, member);
-  const  { familyNameId } = member;
 
   const { width } = dimensions;
   const boxWidth = 200;
@@ -26,14 +25,14 @@ const positionElements = (dimensions, svg, familyData, member) => {
 
   const props = { svg, dimensions, points: [], width: boxWidth };
 
-  const _getChildrenOffset = (memberId) => {
-    return getChildrenOffset(familyData, { familyNameId, memberId });
+  const _getChildrenOffset = (ids) => {
+    return getChildrenOffset(familyData, ids);
   };
 
 
   const renderChildren = (children, parentsPoint = 'preachy') => {
     let rowOffset = (children || []).reduce((tot, child) => {
-      return tot + _getChildrenOffset(child.memberId);
+      return tot + _getChildrenOffset(child.ids);
     }, 0);
     let curOffset = 0;
     const points = (children || []).map((child, i) => {
@@ -41,7 +40,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
       const x = parentsPoint[0];
       let offset = x - padding * (children.length - 1 + rowOffset + curOffset) / 2;
       const y = parentsPoint[1];
-      const childrenOffset = _getChildrenOffset(child.memberId);
+      const childrenOffset = _getChildrenOffset(child.ids);
       if (childrenOffset) {
         curOffset -= childrenOffset * 2;
         offset += padding * childrenOffset / 2;
@@ -58,7 +57,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
     });
   };
 
-//  coupldOffset is quickfix. Should be refactored
+//  coupledOffset is quickfix. Should be refactored
   const renderParents = (parents, originPoints, depth = 0, coupleOffset = 0) => {
     let duplicateOffset = 0;
     const points = (parents || []).map((parent, i) => {
