@@ -101,8 +101,8 @@ const positionElements = (dimensions, svg, familyData, member) => {
       textBoxes.push({ ...props, ids: targetPartner.ids, point: targetPartner.points, textArray: [targetPartner.fullName] });
 
       renderChildren(target.children, middle);
-      renderParents(target.parents, target.points, 1, 1);
-      renderParents(targetPartner.parents, targetPartner.points, 1, 1);
+      // renderParents(target.parents, target.points, 1, 1);
+      // renderParents(targetPartner.parents, targetPartner.points, 1, 1);
     } else {
       target.points = [middleX, middleY];
       const middle = target.points;
@@ -110,7 +110,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
       textBoxes.push({ ...props, point: target.points, textArray: [target.fullName] });
 
       renderChildren(target.children, middle);
-      renderParents(target.parents, target.points);
+      // renderParents(target.parents, target.points);
     }
   };
 

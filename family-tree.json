@@ -9,16 +9,10 @@
           "firstName": "James/William",
           "memberId": 0,
           "partners": [
-            {
-              "familyNameId": 1,
-              "memberId": 0
-            }
+            { "familyNameId": 1, "memberId": 0 }
           ],
           "children": [
-            {
-              "familyNameId": 0,
-              "memberId": 1
-            }
+            { "familyNameId": 0, "memberId": 1 }
           ]
         },
         {
