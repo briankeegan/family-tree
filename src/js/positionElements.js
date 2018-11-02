@@ -47,7 +47,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
 
   const renderChildren = (children, parentsPoint = 'preachy') => {
     const createChildrenArray = (children, depth = 0) => {
-      (children || []).forEach((child, i) => {
+      (children || []).forEach((child) => {
         if (!childrenArray[depth]) {
           childrenArray[depth] = [];
         }
@@ -93,67 +93,6 @@ const positionElements = (dimensions, svg, familyData, member) => {
         }
       });
     }
-  };
-
-  const renderChildren321 = (children, parentsPoint = 'preachy') => {
-    const renderChildrenRecursively = (children, depth = 0) => {
-      (children || []).forEach((child, i) => {
-        let initialOffset = i * 2;
-        if (!childrenArray[depth]) {
-          childrenArray[depth] = [];
-        }
-        if ((child.children || []).length) {
-          const { children } = child;
-          const childDepth = depth + 1;
-          const start = (childrenArray[depth + 1] || []).length;
-          const { length } = children;
-          const end = start + length;
-          child.startChildRef = start;
-          renderChildrenRecursively(children, childDepth);
-          const childAdjustedPosition = childrenArray[childDepth]
-            .slice(start, end)
-            .reduce((num, grandChild) => {
-              // try refactoring to `return num += grandChild.offset;`
-              num += grandChild.offset;
-              return num;
-            }, 0) / length;
-          if (i && childAdjustedPosition) {
-            mutateOffset(childrenArray[childDepth], start, -childAdjustedPosition);
-          } else if (childAdjustedPosition < initialOffset) {
-            mutateOffset(childrenArray[childDepth], start, childAdjustedPosition - initialOffset);
-          }
-        }
-        const offset = childrenArray[depth].length ?
-          childrenArray[depth][childrenArray[depth].length -1].offset + 2 :
-          0;
-        child.offset = offset;
-        childrenArray[depth].push(child);
-      });
-    };
-    renderChildrenRecursively(children);
-  };
-
-  const renderChildren123 = (children, parentsPoint = 'preachy', depth = 0 ) => {
-    const points = (children || []).map((child, i) => {
-      const padding = boxWidth + childrenPadding;
-      const x = parentsPoint[0];
-      let offset = x - padding * (children.length - 1 + curOffset) / 2;
-      const y = parentsPoint[1];
-      let childrenOffset = _getChildrenOffset(child.ids);
-      if (childrenOffset) {``
-        curOffset -= childrenOffset * 2;
-        offset += padding * childrenOffset / 2;
-      }
-      return [offset + i * padding, y + 200];
-    });
-    (children || []).forEach((child, i) => {
-      const { fullName, ids } = child;
-      lines.push({ ...props, points: createPointsLine(parentsPoint, points[i]) });
-      textBoxes.push({ ...props, point: points[i], ids, textArray: [fullName] });
-      if (child.children) {
-        renderChildren(child.children, points[i]);
-      }
-    });
   };
 
   //  coupleOffset is quickfix. Should be refactored
