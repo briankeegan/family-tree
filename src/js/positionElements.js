@@ -25,10 +25,6 @@ const positionElements = (dimensions, svg, familyData, member) => {
 
   const props = { svg, dimensions, points: [], width: boxWidth };
 
-  const _getChildrenOffset = (ids) => {
-    return getChildrenOffset(familyData, ids);
-  };
-
   const mutateOffset = (array, depth, index, offset) => {
     let hasMutatedDepth = false;
     for (let i = index; i < array[depth].length; i++) {
@@ -36,7 +32,6 @@ const positionElements = (dimensions, svg, familyData, member) => {
       const { childRef } = array[depth][i];
       if (!hasMutatedDepth && childRef) {
         const { start } = childRef;
-        console.log('here!', depth + 1, start, offset)
         mutateOffset(childrenArray, depth + 1, start, offset);
         hasMutatedDepth = true;
       }
@@ -45,9 +40,9 @@ const positionElements = (dimensions, svg, familyData, member) => {
 
   const childrenArray = [];
 
-  const renderChildren = (children, parentsPoint = 'preachy') => {
+  const renderChildren = (children = [], originPoints) => {
     const createChildrenArray = (children, depth = 0) => {
-      (children || []).forEach((child) => {
+      children.forEach((child) => {
         if (!childrenArray[depth]) {
           childrenArray[depth] = [];
         }
@@ -67,7 +62,8 @@ const positionElements = (dimensions, svg, familyData, member) => {
 
     for (let depth = childrenArray.length - 1; depth >= 0; depth--) {
       childrenArray[depth].forEach((child, i) => {
-        let initialOffset = i * 2;
+        const firstRowOffset = (childrenArray[0].length) - 1
+        let initialOffset = i * 2 - firstRowOffset;
         if (depth === childrenArray.length -1) {
           child.offset = initialOffset;
         } else {
@@ -81,18 +77,42 @@ const positionElements = (dimensions, svg, familyData, member) => {
                 num += grandChild.offset;
                 return num;
               }, 0) / children.length;
-            if (!i && childAdjustedPosition) {
+            if (!i && childAdjustedPosition !== initialOffset) {
               mutateOffset(childrenArray, depth + 1, start, -childAdjustedPosition);
             } else if (childAdjustedPosition < initialOffset) {
               mutateOffset(childrenArray, depth + 1, start, initialOffset - childAdjustedPosition);
             } else if (childAdjustedPosition > initialOffset) {
-              initialOffset = childAdjustedPosition;
+              initialOffset = childAdjustedPosition - firstRowOffset;
             }
           }
           child.offset = initialOffset;
         }
       });
     }
+
+    // In refactor consider using d3's enter / or multiple arrays, so can animated down...
+    childrenArray.forEach((array, depth) => {
+      array.forEach(child => {
+        const padding = boxWidth + childrenPadding;
+        const x = originPoints[0];
+        const offset = x + (padding * child.offset) / 2;
+        const y = originPoints[1] + (200 * (depth + 1));
+        child.point = [offset, y];
+      });
+    });
+
+    const addToArrays = (children, originPoints) => {
+      children.forEach((child) => {
+        const { fullName, ids, point } = child;
+        lines.push({ ...props, points: createPointsLine(originPoints, point)});
+        textBoxes.push({ ...props, point, ids, textArray: [fullName]});
+        if ((child.children || []).length) {
+          addToArrays(child.children, point);
+        }
+      });
+    };
+
+    addToArrays(children, originPoints);
   };
 
   //  coupleOffset is quickfix. Should be refactored
@@ -159,6 +179,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
 
   console.log(childrenArray);
 
+
   lines.forEach(line => appendLine(line));
   textBoxes.forEach(textBox => {
     const box = appendTextBox(textBox);
@@ -167,7 +188,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
         if (textBox.ids) {
           svg.selectAll('*').remove();
           // quickfix, arrays not clearing
-
+          // reset positions as well
           lines = [];
           textBoxes = [];
           positionElements(dimensions, svg, familyData, textBox.ids);

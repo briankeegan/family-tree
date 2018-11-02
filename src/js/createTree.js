@@ -14,7 +14,7 @@ const appendLine = ({ svg, dimensions, points }) => {
     .attr('d', pathData)
     .attr('fill', 'none')
     .attr('transform', getTranslateString(paddingLeft, paddingTop ))
-    .attr('class', 'connecting-line')
+    .attr('class', 'connecting-line');
 
   var totalLength = path.node().getTotalLength();
 
