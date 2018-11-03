@@ -3,7 +3,8 @@ import * as d3 from 'd3';
 import {
   getPointsMiddle,
   appendLine,
-  createPointsLine,
+  createPointsLineDown,
+  createPointsLineUp,
   appendTextBox,
 } from 'src/js/createTree';
 
@@ -103,7 +104,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
     const addToArrays = (children, originPoints) => {
       children.forEach((child) => {
         const { fullName, ids, point, depth } = child;
-        lines.push({ ...props, points: createPointsLine(originPoints, point), delay: depth });
+        lines.push({ ...props, points: createPointsLineDown(originPoints, point), delay: depth });
         textBoxes.push({ ...props, point, ids, textArray: [fullName], delay: depth });
         if ((child.children || []).length) {
           addToArrays(child.children, point);
@@ -138,7 +139,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
     });
     (parents || []).forEach((parent, i) => {
       const { fullName, ids } = parent;
-      lines.push({ ...props, points: createPointsLine(points[i], originPoints)});
+      lines.push({ ...props, points: createPointsLineUp(originPoints, points[i])});
       textBoxes.push({ ...props, point: points[i], ids, textArray: [fullName]});
       if (parent.parents) {
         renderParents(parent.parents, points[i], depth + 1);
@@ -161,8 +162,8 @@ const positionElements = (dimensions, svg, familyData, member) => {
       textBoxes.push({ ...props, ids: targetPartner.ids, point: targetPartner.points, textArray: [targetPartner.fullName] });
 
       renderChildren(target.children, middle);
-      // renderParents(target.parents, target.points, 1, 1);
-      // renderParents(targetPartner.parents, targetPartner.points, 1, 1);
+      renderParents(target.parents, target.points, 1, 1);
+      renderParents(targetPartner.parents, targetPartner.points, 1, 1);
     } else {
       target.points = [middleX, middleY];
       const middle = target.points;
@@ -170,7 +171,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
       textBoxes.push({ ...props, point: target.points, textArray: [target.fullName] });
 
       renderChildren(target.children, middle);
-      // renderParents(target.parents, target.points);
+      renderParents(target.parents, target.points);
     }
   };
 

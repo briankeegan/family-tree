@@ -172,17 +172,23 @@ const getPointsMiddle = (point1, point2) => (
   [(point1[0] + point2[0]) / 2, (point1[1] + point2[1]) / 2]
 );
 
-const getCurve = (start, end) => (
-  [end[0], (start[1] + end[1] + 50) / 2]
+const createPointsLineDown = (start, end) => (
+  [
+    start,
+    [start[0], start[1] + 50],
+    [end[0], (start[1] + end[1] + 50) / 2],
+    end
+  ]
 );
 
-const createPointsLine = (middle, end) => (
-  [middle, [middle[0], middle[1] + 50], getCurve(middle, end), end]
+const createPointsLineUp = (end, start) => (
+  createPointsLineDown(start, end).reverse()
 );
 
 export {
   getPointsMiddle,
   appendLine,
-  createPointsLine,
+  createPointsLineDown,
+  createPointsLineUp,
   appendTextBox
 };

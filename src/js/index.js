@@ -9,7 +9,7 @@ import { processData, getDepthObj, isPartnerOfChildren } from 'src/js/processDat
 // const data = processData(familyData, { familyNameId: 0, memberId: 0 });
 // console.log('data', data)
 // console.log(isPartnerOfChildren(data[0], data[1]))
-console.log('getDepthObj', getDepthObj(familyData, { familyNameId: 0, memberId: 1 }))
+// console.log('getDepthObj', getDepthObj(familyData, { familyNameId: 0, memberId: 1 }))
 
 const dimensions = {
   width: 1600,
@@ -43,4 +43,4 @@ function reset() {
 d3.select('.reset')
   .on('click', reset);
 
-positionElements(dimensions, content, familyData, { familyNameId: 0, memberId: 0 });
+positionElements(dimensions, content, familyData, { familyNameId: 0, memberId: 7 });
