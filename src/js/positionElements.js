@@ -61,33 +61,34 @@ const positionElements = (dimensions, svg, familyData, member) => {
     createChildrenArray(children);
 
     for (let depth = childrenArray.length - 1; depth >= 0; depth--) {
+      const firstRowOffset = (childrenArray[0].length) - 1;
+      let lastOffset = 0
       childrenArray[depth].forEach((child, i) => {
-        const firstRowOffset = (childrenArray[0].length) - 1
-        let initialOffset = i * 2 - firstRowOffset;
-        if (depth === childrenArray.length -1) {
-          child.offset = initialOffset;
-        } else {
-          if ((child.children || []).length) {
-            const { childRef, children } = child;
-            const { start, end } = childRef;
-            const childAdjustedPosition = childrenArray[depth + 1]
-              .slice(start, end)
-              .reduce((num, grandChild) => {
-                // try refactoring to `return num += grandChild.offset;`
-                num += grandChild.offset;
-                return num;
-              }, 0) / children.length;
-            if (!i && childAdjustedPosition !== initialOffset) {
-              mutateOffset(childrenArray, depth + 1, start, -childAdjustedPosition);
-            } else if (childAdjustedPosition < initialOffset) {
-              mutateOffset(childrenArray, depth + 1, start, initialOffset - childAdjustedPosition);
-            } else if (childAdjustedPosition > initialOffset) {
-              initialOffset = childAdjustedPosition - firstRowOffset;
-            }
+        // console.log(lastOffset, child.fullName)
+        let initialOffset = lastOffset;
+        if ((child.children || []).length) {
+          const { childRef, children } = child;
+          const { start, end } = childRef;
+          const childAdjustedPosition = childrenArray[depth + 1]
+            .slice(start, end)
+            .reduce((num, grandChild) => num += grandChild.offset, 0) / children.length;
+          if (!i && childAdjustedPosition !== initialOffset) {
+            mutateOffset(childrenArray, depth + 1, start, -childAdjustedPosition);
+          } else if (childAdjustedPosition < initialOffset) {
+            mutateOffset(childrenArray, depth + 1, start, initialOffset - childAdjustedPosition);
+          } else if (childAdjustedPosition > initialOffset) {
+            initialOffset = childAdjustedPosition - firstRowOffset;
           }
-          child.offset = initialOffset;
         }
+        child.offset = initialOffset;
+        // console.log(initialOffset, child.fullName, 'initialOffset')
+        lastOffset = initialOffset + 2;
       });
+
+      if (!depth) {
+        const topLevelOffset = childrenArray[0].reduce((num, child) => num += child.offset, 0) / children.length;
+        mutateOffset(childrenArray, 0, 0, -topLevelOffset);
+      }
     }
 
     // In refactor consider using d3's enter / or multiple arrays, so can animated down...

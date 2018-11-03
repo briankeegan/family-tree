@@ -36,7 +36,8 @@
             { "familyNameId": 0, "memberId": 4 },
             { "familyNameId": 0, "memberId": 5 },
             { "familyNameId": 0, "memberId": 6 },
-            { "familyNameId": 0, "memberId": 7 }
+            { "familyNameId": 0, "memberId": 7 },
+            { "familyNameId": 0, "memberId": 8 }
           ]
         },
         {
@@ -106,7 +107,8 @@
           ],
           "children": [
             { "familyNameId": 0, "memberId": 10 },
-            { "familyNameId": 0, "memberId": 11 }
+            { "familyNameId": 0, "memberId": 11 },
+            { "familyNameId": 0, "memberId": 15 }
           ]
         },
         {
@@ -121,6 +123,7 @@
             { "familyNameId": 2, "memberId": 1 }
           ],
           "children": [
+            { "familyNameId": 0, "memberId": 14 }
           ]
         },
         {
@@ -179,10 +182,36 @@
           ]
         },
         {
-          "fullName": "Igor  Keegan",
+          "fullName": "asdf  Keegan",
           "firstName": "Thomas",
           "middleName": "Augustus",
           "memberId": 13,
+          "partners": [
+          ],
+          "parents": [
+            { "familyNameId": 0, "memberId": 11 }
+          ],
+          "children": [
+          ]
+        },
+        {
+          "fullName": "gchild1  Keegan",
+          "firstName": "Thomas",
+          "middleName": "Augustus",
+          "memberId": 14,
+          "partners": [
+          ],
+          "parents": [
+            { "familyNameId": 0, "memberId": 11 }
+          ],
+          "children": [
+          ]
+        },
+        {
+          "fullName": "gchild2  Keegan",
+          "firstName": "Thomas",
+          "middleName": "Augustus",
+          "memberId": 15,
           "partners": [
           ],
           "parents": [
