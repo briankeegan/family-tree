@@ -61,10 +61,8 @@ const positionElements = (dimensions, svg, familyData, member) => {
     createChildrenArray(children);
 
     for (let depth = childrenArray.length - 1; depth >= 0; depth--) {
-      const firstRowOffset = (childrenArray[0].length) - 1;
-      let lastOffset = 0
+      let lastOffset = 0;
       childrenArray[depth].forEach((child, i) => {
-        // console.log(lastOffset, child.fullName)
         let initialOffset = lastOffset;
         if ((child.children || []).length) {
           const { childRef, children } = child;
@@ -77,11 +75,10 @@ const positionElements = (dimensions, svg, familyData, member) => {
           } else if (childAdjustedPosition < initialOffset) {
             mutateOffset(childrenArray, depth + 1, start, initialOffset - childAdjustedPosition);
           } else if (childAdjustedPosition > initialOffset) {
-            initialOffset = childAdjustedPosition - firstRowOffset;
+            initialOffset = childAdjustedPosition;
           }
         }
         child.offset = initialOffset;
-        // console.log(initialOffset, child.fullName, 'initialOffset')
         lastOffset = initialOffset + 2;
       });
 
