@@ -1,5 +1,7 @@
 import * as d3 from 'd3';
 
+const animationSpeed = 500;
+
 const getTranslateString = (x, y) => {
   return 'translate(' + x + ',' + y + ')';
 };
@@ -24,8 +26,8 @@ const appendLine = ({ svg, dimensions, points, delay = 0 }) => {
     .attr('stroke-dashoffset', totalLength)
     .attr('opacity', 0)
     .transition()
-    .duration(500)
-    .delay(delay * 500)
+    .duration(animationSpeed)
+    .delay(delay * animationSpeed)
     .ease(d3.easeLinear)
     .attr('stroke-dashoffset', 0)
     .attr('opacity', 1);
@@ -67,8 +69,8 @@ const appendTextWrap = (props) => {
 
   textWrap
     .transition()
-    .duration(500)
-    .delay(delay * (600))
+    .duration(animationSpeed)
+    .delay(delay * (animationSpeed + animationSpeed / 4))
     .ease(d3.easeLinear)
     .attr('opacity', 1);
   while (words.length > 0) {
@@ -136,8 +138,8 @@ const appendTextBox = ({
 
   container
     .transition()
-    .duration(200)
-    .delay(delay * (600))
+    .duration(animationSpeed / 4)
+    .delay(delay * (animationSpeed + animationSpeed / 4))
     .ease(d3.easeLinear)
     .attr('opacity', 1);
 
