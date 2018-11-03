@@ -92,6 +92,7 @@
             { "familyNameId": 2, "memberId": 1 }
           ],
           "children": [
+            { "familyNameId": 0, "memberId": 16 }
           ]
         },
         {
@@ -216,6 +217,47 @@
           ],
           "parents": [
             { "familyNameId": 0, "memberId": 11 }
+          ],
+          "children": [
+            { "familyNameId": 0, "memberId": 17 }
+          ]
+        },
+        {
+          "fullName": "gchild4  Keegan",
+          "firstName": "Thomas",
+          "middleName": "Augustus",
+          "memberId": 16,
+          "partners": [
+          ],
+          "parents": [
+            { "familyNameId": 0, "memberId": 5 }
+          ],
+          "children": [
+          ]
+        },
+        {
+          "fullName": "gchild5  Keegan",
+          "firstName": "Thomas",
+          "middleName": "Augustus",
+          "memberId": 17,
+          "partners": [
+          ],
+          "parents": [
+            { "familyNameId": 0, "memberId": 15 }
+          ],
+          "children": [
+            { "familyNameId": 0, "memberId": 18 }
+          ]
+        },
+        {
+          "fullName": "gchild6  Keegan",
+          "firstName": "Thomas",
+          "middleName": "Augustus",
+          "memberId": 18,
+          "partners": [
+          ],
+          "parents": [
+            { "familyNameId": 0, "memberId": 17 }
           ],
           "children": [
           ]
