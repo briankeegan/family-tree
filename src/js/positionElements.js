@@ -7,7 +7,7 @@ import {
   appendTextBox,
 } from 'src/js/createTree';
 
-import { processData, getChildrenOffset } from 'src/js/processData';
+import { processData } from 'src/js/processData';
 
 let lines = [];
 let textBoxes = [];
@@ -88,22 +88,23 @@ const positionElements = (dimensions, svg, familyData, member) => {
       }
     }
 
-    // In refactor consider using d3's enter / or multiple arrays, so can animated down...
+    // In refactor consider using d3's enter
     childrenArray.forEach((array, depth) => {
       array.forEach(child => {
         const padding = boxWidth + childrenPadding;
         const x = originPoints[0];
-        const offset = x + (padding * child.offset) / 2;
+        const position = x + (padding * child.offset) / 2;
         const y = originPoints[1] + (200 * (depth + 1));
-        child.point = [offset, y];
+        child.point = [position, y];
+        child.depth = depth + 1;
       });
     });
 
     const addToArrays = (children, originPoints) => {
       children.forEach((child) => {
-        const { fullName, ids, point } = child;
-        lines.push({ ...props, points: createPointsLine(originPoints, point)});
-        textBoxes.push({ ...props, point, ids, textArray: [fullName]});
+        const { fullName, ids, point, depth } = child;
+        lines.push({ ...props, points: createPointsLine(originPoints, point), delay: depth });
+        textBoxes.push({ ...props, point, ids, textArray: [fullName], delay: depth });
         if ((child.children || []).length) {
           addToArrays(child.children, point);
         }

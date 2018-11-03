@@ -4,7 +4,7 @@ const getTranslateString = (x, y) => {
   return 'translate(' + x + ',' + y + ')';
 };
 
-const appendLine = ({ svg, dimensions, points }) => {
+const appendLine = ({ svg, dimensions, points, delay = 0 }) => {
   const { paddingLeft, paddingTop  } = dimensions;
   const curveLineGenerator = d3.line().curve(d3.curveBundle);
 
@@ -22,9 +22,10 @@ const appendLine = ({ svg, dimensions, points }) => {
   path
     .attr('stroke-dasharray', `${totalLength} ${totalLength}`)
     .attr('stroke-dashoffset', totalLength)
-    .attr('opacity', 0.2)
+    .attr('opacity', 0)
     .transition()
     .duration(500)
+    .delay(delay * 500)
     .ease(d3.easeLinear)
     .attr('stroke-dashoffset', 0)
     .attr('opacity', 1);
@@ -58,13 +59,16 @@ const appendTextWrap = (props) => {
     ...props,
     text: phrase,
     padding: lineNumber.increment() * 20
-  })
+  });
+
+  const { delay = 0 } = props;
 
   textWrap.attr('opacity', 0);
 
   textWrap
     .transition()
     .duration(500)
+    .delay(delay * (600))
     .ease(d3.easeLinear)
     .attr('opacity', 1);
   while (words.length > 0) {
@@ -101,7 +105,8 @@ const appendTextBox = ({
   point,
   dimensions,
   textArray,
-  width
+  width,
+  delay = 0
 }) => {
   const lineNumber = {
     current: 0,
@@ -121,7 +126,8 @@ const appendTextBox = ({
     dimensions,
     width,
     textArray,
-    lineNumber
+    lineNumber,
+    delay
   });
   const height = lineNumber.current * 20 + 10;
   container.attr('height', height);
@@ -130,7 +136,8 @@ const appendTextBox = ({
 
   container
     .transition()
-    .duration(500)
+    .duration(200)
+    .delay(delay * (600))
     .ease(d3.easeLinear)
     .attr('opacity', 1);
 
