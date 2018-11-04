@@ -225,7 +225,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
       textBoxes.push({ ...props, point: target.points, textArray: [target.fullName] });
 
       renderChildren(target.children, middle);
-      renderParents(target.parents, target.points);
+      renderParents(target);
     }
   };
 
