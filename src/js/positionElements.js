@@ -23,7 +23,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
   const middleY = 300;
   const spaceBetween = boxWidth + 100;
   const margin = 10;
-  const unkownParent = 'Unkonwn';
+  const unkownParent = 'Unknown';
 
   const props = { svg, dimensions, points: [], width: boxWidth };
 
@@ -166,86 +166,36 @@ const positionElements = (dimensions, svg, familyData, member) => {
       rowLength *= 2;
     }
 
-    console.log(mockUp)
+    const getPoint = (origin, position, depth) => {
+      const depthOffset = parentsArray[depth].length * ((boxWidth + margin) / 2);
+      const padding = boxWidth + margin;
+      const positionX = (origin[0] + padding * position) - depthOffset;
+      const positionY = origin[1] - 200;
+      return [positionX, positionY];
+    };
 
     mockUp.forEach((depthArray, depth) => {
       depthArray.forEach((parents, i)=> {
         if (parents) {
           parents.forEach((parent, j) => {
-
+            let startPoints;
             if (depth) {
               const child = getMockChild(i, depth);
-
-              const padding = boxWidth + margin;
-              const positionX = child.point[0] + (padding * (i + j));
-              const positionY = (child.point[1] - 200);
-              parent.point = [positionX, positionY];
-
-              const { fullName, ids, point } = parent;
-              // debugger
-              lines.push({ ...props, points: createPointsLineUp(child.point, point)});
-              textBoxes.push({ ...props, point, ids, textArray: [fullName]});
+              parent.point = getPoint(child.point, i + j, depth);
+              startPoints = child.point;
             } else {
-              const padding = boxWidth + margin;
-              const positionX = originPoints[0] + (padding * (i + j));
-              const positionY = (originPoints[1] - 200);
-              parent.point = [positionX, positionY];
-
-              const { fullName, ids, point } = parent;
-              // originPoints
-              lines.push({ ...props, points: createPointsLineUp(originPoints, point)});
-              textBoxes.push({ ...props, point, ids, textArray: [fullName]});
+              parent.point = parent.point = getPoint(originPoints, i + j, depth);
+              startPoints = originPoints;
             }
+            const { fullName, ids, point } = parent;
+            lines.push({ ...props, points: createPointsLineUp(startPoints, point)});
+            textBoxes.push({ ...props, point, ids, textArray: [fullName]});
           });
         }
       });
     });
-    // const padding = boxWidth + margin;
-    // const x = originPoints[0];
-    // const position = x + (padding * child.offset) / 2;
-    // const y = originPoints[1] + (200 * (depth + 1));
-    // child.point = [position, y];
-    // child.depth = depth + 1;
-    // (parents || []).forEach((parent, i) => {
-    //   const { fullName, ids } = parent;
-    //   lines.push({ ...props, points: createPointsLineUp(originPoints, points[i])});
-    //   textBoxes.push({ ...props, point: points[i], ids, textArray: [fullName]});
-    //   if (parent.parents) {
-    //     renderParents123(parent.parents, points[i], depth + 1);
-    //   }
-    // });
   };
 
-  const renderParents123 = (parents, originPoints, depth = 0, coupleOffset = 0) => {
-    let duplicateOffset = 0;
-    const points = (parents || []).map((parent, i) => {
-      const padding = boxWidth + margin;
-      const x = originPoints[0];
-      const offset = x - padding * (parents.length - 1  + duplicateOffset + (Math.pow(2, depth) - 1) - coupleOffset) / 2;
-      const y = originPoints[1];
-
-      let point = [offset + i * padding, y - 200];
-
-      const checkForDuplicates = (p) => {
-        if (textBoxes.some(box => box.point[0] === p[0] && box.point[1] === p[1])) {
-          duplicateOffset -= 2;
-          point[0] += padding;
-          checkForDuplicates(point);
-        }
-      };
-
-      checkForDuplicates(point);
-      return point;
-    });
-    (parents || []).forEach((parent, i) => {
-      const { fullName, ids } = parent;
-      lines.push({ ...props, points: createPointsLineUp(originPoints, points[i])});
-      textBoxes.push({ ...props, point: points[i], ids, textArray: [fullName]});
-      if (parent.parents) {
-        renderParents123(parent.parents, points[i], depth + 1);
-      }
-    });
-  };
 
   const createTarget = () => {
     // To do: allow for more than one partner || allow different combos.
@@ -262,9 +212,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
 
       renderChildren(target.children, middle);
       renderParents(target.parents, target.points);
-      // renderParents123(target.parents, target.points, 1, 1);
       renderParents(targetPartner.parents, targetPartner.points);
-      // renderParents123(targetPartner.parents, targetPartner.points, 1, 1);
     } else {
       target.points = [middleX, middleY];
       const middle = target.points;
@@ -273,7 +221,6 @@ const positionElements = (dimensions, svg, familyData, member) => {
 
       renderChildren(target.children, middle);
       renderParents(target.parents, target.points);
-      // renderParents123(target.parents, target.points);
     }
   };
 
