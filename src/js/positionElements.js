@@ -118,6 +118,9 @@ const positionElements = (dimensions, svg, familyData, member) => {
   //  coupleOffset is quickfix. Should be refactored
 
   const renderParents = (parents = [], originPoints) => {
+    if (!parents.length) {
+      return
+    }
     const parentsArray = [];
     const populateParentsArray = (parents, depth = 0) => {
       if (!parentsArray[depth]) {
@@ -136,6 +139,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
       }
       parentsArray[depth].push(parents);
     };
+
     populateParentsArray(parents);
 
     const mockUp = [];
