@@ -117,9 +117,10 @@ const positionElements = (dimensions, svg, familyData, member) => {
 
   //  coupleOffset is quickfix. Should be refactored
 
-  const renderParents = (parents = [], originPoints) => {
+  const renderParents = (origin) => {
+    const { points: originPoints, parents = []} = origin;
     if (!parents.length) {
-      return
+      return;
     }
     const parentsArray = [];
     const populateParentsArray = (parents, depth = 0) => {
@@ -215,8 +216,8 @@ const positionElements = (dimensions, svg, familyData, member) => {
       textBoxes.push({ ...props, ids: targetPartner.ids, point: targetPartner.points, textArray: [targetPartner.fullName] });
 
       renderChildren(target.children, middle);
-      renderParents(target.parents, target.points);
-      renderParents(targetPartner.parents, targetPartner.points);
+      renderParents(target);
+      renderParents(targetPartner);
     } else {
       target.points = [middleX, middleY];
       const middle = target.points;
