@@ -15,7 +15,7 @@ const dimensions = {
 var zoomListener = d3.zoom()
   .scaleExtent([0.2, 2])
   .on('zoom', zoomHandler);
-  
+
 const svg = d3.select('.john-misty')
   .call(zoomListener);
 
@@ -27,11 +27,13 @@ function zoomHandler() {
   d3.select(this).select('g').attr('transform', `translate(${x},${y}) scale(${k})`);
 }
 
-function reset() {
+const resetPosition = () => {
   svg.call(zoomListener.transform, d3.zoomIdentity);
-}
+};
 
 d3.select('.reset')
-  .on('click', reset);
+  .on('click', resetPosition);
 
 positionElements(dimensions, content, familyData, { familyNameId: 0, memberId: 1 });
+
+export { resetPosition };

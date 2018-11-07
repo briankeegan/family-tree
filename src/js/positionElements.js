@@ -7,6 +7,7 @@ import {
 } from 'src/js/createTree';
 
 import { processData } from 'src/js/processData';
+import { resetPosition } from 'src/js/index';
 
 let lines = [];
 let textBoxes = [];
@@ -245,6 +246,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
       lines = [];
       textBoxes = [];
       positionElements(dimensions, svg, familyData, textBox.ids);
+      resetPosition();
     }
   );
 
