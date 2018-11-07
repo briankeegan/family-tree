@@ -15,7 +15,7 @@ const dimensions = {
 var zoomListener = d3.zoom()
   .scaleExtent([0.2, 2])
   .on('zoom', zoomHandler);
-
+  
 const svg = d3.select('.john-misty')
   .call(zoomListener);
 

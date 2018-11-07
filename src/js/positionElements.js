@@ -197,9 +197,10 @@ const positionElements = (dimensions, svg, familyData, member) => {
               }
               startPoints = points;
             }
+            const delay = depth + 1;
             const { fullName, ids, point } = parent;
-            lines.push({ ...props, points: createPointsLineUp(startPoints, point)});
-            textBoxes.push({ ...props, point, ids, textArray: [fullName]});
+            lines.push({ ...props, points: createPointsLineUp(startPoints, point), delay });
+            textBoxes.push({ ...props, point, ids, textArray: [fullName], delay });
           });
         }
       });
