@@ -29,28 +29,6 @@ const getDepthObj = ({ families }, targetIds) => {
   return { childrenDepth, parentDepth };
 };
 
-const getChildrenOffset = ({ families }, targetIds) => {
-  const getDepthRecursively = (targetIds) => {
-    const member = getMember(targetIds, families);
-    if ((member.children || []).length) {
-      const existingMembers = getExistingMembers(member.children, families);
-      return existingMembers.reduce((t, m) => t + getDepthRecursively(m), 0) + member.children.length - 1;
-    }
-    return 0;
-  };
-  return getDepthRecursively(targetIds);
-};
-
-const getParentOffset = ((data, targetIds) => {
-
-  const getDepth = (targetIds) => {
-    const getDepthRecursively = (targetIds) => {
-
-    };
-    return getDepthRecursively(targetIds);
-  };
-});
-
 const processData = (
   { families },
   targetIds
@@ -118,4 +96,4 @@ const isPartnerOfChildren = (member, partner) => {
   });
 };
 
-export { processData, getDepthObj, isPartnerOfChildren, getChildrenOffset };
+export { processData, getDepthObj, isPartnerOfChildren };
