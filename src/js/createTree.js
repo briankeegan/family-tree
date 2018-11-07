@@ -40,17 +40,25 @@ const appendText = ({
   width,
   dimensions,
   text,
-  padding = 0
+  padding = 0,
+  onClick
 }) => {
   const x = point[0] - width / 2 + 10;
   const y = point[1] + padding;
   const { paddingLeft, paddingTop  } = dimensions;
-  return svg.append('text')
+  const textElement = svg.append('text')
     .text(text)
     .attr('x', x)
     .attr('y', y)
     .attr('transform', getTranslateString(paddingLeft, paddingTop ))
     .attr('class', 'text');
+
+  if (onClick) {
+    textElement
+      .on('click', onClick);
+  }
+
+  return textElement;
 };
 
 const appendTextWrap = (props) => {
@@ -73,6 +81,7 @@ const appendTextWrap = (props) => {
     .delay(delay * (animationSpeed + animationSpeed / 4))
     .ease(d3.easeLinear)
     .attr('opacity', 1);
+
   while (words.length > 0) {
     let word = words.shift();
     textWrap.node().textContent = `${phrase} ${word}`;
@@ -108,7 +117,8 @@ const appendTextBox = ({
   dimensions,
   textArray,
   width,
-  delay = 0
+  delay = 0,
+  onClick
 }) => {
   const lineNumber = {
     current: 0,
@@ -129,7 +139,8 @@ const appendTextBox = ({
     width,
     textArray,
     lineNumber,
-    delay
+    delay,
+    onClick
   });
   const height = lineNumber.current * 20 + 10;
   container.attr('height', height);
@@ -143,6 +154,10 @@ const appendTextBox = ({
     .ease(d3.easeLinear)
     .attr('opacity', 1);
 
+  if (onClick) {
+    container
+      .on('click', onClick);
+  }
   return container;
 };
 

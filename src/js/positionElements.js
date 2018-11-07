@@ -238,20 +238,24 @@ const positionElements = (dimensions, svg, familyData, member) => {
 
   createTarget();
 
+  const onClickBox = (textBox) => (
+    () => {
+      svg.selectAll('*').remove();
+      // quickfix, arrays not clearing
+      // reset positions as well
+      lines = [];
+      textBoxes = [];
+      positionElements(dimensions, svg, familyData, textBox.ids);
+    }
+  );
+
   lines.forEach(line => appendLine(line));
   textBoxes.forEach(textBox => {
-    const box = appendTextBox(textBox);
-    box
-      .on('click', function() {
-        if (textBox.ids) {
-          svg.selectAll('*').remove();
-          // quickfix, arrays not clearing
-          // reset positions as well
-          lines = [];
-          textBoxes = [];
-          positionElements(dimensions, svg, familyData, textBox.ids);
-        }
-      });
+    let props = textBox;
+    if (textBox.ids) {
+      props.onClick = onClickBox(textBox);
+    }
+    appendTextBox(props);
   });
 
 };
