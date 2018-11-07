@@ -95,7 +95,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
         const padding = boxWidth + margin;
         const x = originPoints[0];
         const position = x + (padding * child.offset) / 2;
-        const y = originPoints[1] + (200 * (depth + 1));
+        const y = originPoints[1] + (boxWidth * (depth + 1));
         child.point = [position, y];
         child.depth = depth + 1;
       });
@@ -115,14 +115,10 @@ const positionElements = (dimensions, svg, familyData, member) => {
     addToArrays(children, originPoints);
   };
 
-  //  coupleOffset is quickfix. Should be refactored
-
-  const renderParents = (origin) => {
-    const { points: originPoints, parents = []} = origin;
-    if (!parents.length) {
-      return;
-    }
+  const renderParents = (startingTargets) => {
     const parentsArray = [];
+    const mockUp = [];
+
     const populateParentsArray = (parents, depth = 0) => {
       if (!parentsArray[depth]) {
         parentsArray[depth] = [];
@@ -141,25 +137,29 @@ const positionElements = (dimensions, svg, familyData, member) => {
       parentsArray[depth].push(parents);
     };
 
-    populateParentsArray(parents);
+    startingTargets.forEach(origin => {
+      const { parents = []} = origin;
+      if (parents.length) {
+        populateParentsArray(parents);
+      }
+    });
 
-    const mockUp = [];
     const getMockChild = (curIndex, depth) => {
       const binary = curIndex.toString(2);
       const whichPartner = +binary.slice(-1);
       const childIndex = parseInt(+binary.slice(0, -1), 2);
-
       const position = mockUp[depth - 1][childIndex];
+
       return position && position[whichPartner];
     };
 
-    for (let depth = 0, rowLength = 1; depth < parentsArray.length; depth++) {
+    for (let depth = 0, rowLength = startingTargets.length; depth < parentsArray.length; depth++) {
       const mockCopy = [...parentsArray[depth]];
       if (!mockUp[depth]) {
         mockUp[depth] = [];
       }
       for (let i = 0; i < rowLength; i++) {
-        if (i) {
+        if (depth) {
           const mockChild = getMockChild(i, depth);
           if (mockChild && !mockChild.unknown) {
             mockUp[depth].push(mockCopy.pop());
@@ -175,7 +175,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
       const depthOffset = parentsArray[depth].length * ((boxWidth + margin) / 2);
       const padding = boxWidth + margin;
       const positionX = (origin[0] + padding * position) - depthOffset;
-      const positionY = origin[1] - 200;
+      const positionY = origin[1] - boxWidth;
       return [positionX, positionY];
     };
 
@@ -189,8 +189,15 @@ const positionElements = (dimensions, svg, familyData, member) => {
               parent.point = getPoint(child.point, i + j, depth);
               startPoints = child.point;
             } else {
-              parent.point = parent.point = getPoint(originPoints, i + j, depth);
-              startPoints = originPoints;
+              const { points } = startingTargets[i];
+              const parentPoint = getPoint(points, i + j, depth);
+              if (startingTargets.length > 1) {
+                const pointOffset = !i ? parentPoint[0] + boxWidth / 2 : parentPoint[0] - boxWidth / 2;
+                parent.point = [pointOffset, parentPoint[1]];
+              } else {
+                parent.point = parentPoint;
+              }
+              startPoints = points;
             }
             const { fullName, ids, point } = parent;
             lines.push({ ...props, points: createPointsLineUp(startPoints, point)});
@@ -199,6 +206,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
         }
       });
     });
+
   };
 
 
@@ -216,8 +224,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
       textBoxes.push({ ...props, ids: targetPartner.ids, point: targetPartner.points, textArray: [targetPartner.fullName] });
 
       renderChildren(target.children, middle);
-      renderParents(target);
-      renderParents(targetPartner);
+      renderParents([target, targetPartner]);
     } else {
       target.points = [middleX, middleY];
       const middle = target.points;
@@ -225,7 +232,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
       textBoxes.push({ ...props, point: target.points, textArray: [target.fullName] });
 
       renderChildren(target.children, middle);
-      renderParents(target);
+      renderParents([target]);
     }
   };
 
