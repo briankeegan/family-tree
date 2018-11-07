@@ -8,34 +8,17 @@ svg {
   stroke-width: 3px;
 }
 
+.text-container:hover {
+  cursor: pointer;
+}
+
 .connecting-line {
   stroke: #555;
   stroke-width: 2px;
 }
 
-.text {
-  text-shadow:
-    0 0 0 #ddd,
-    0 1px 0 #ddd,
-    1px 0 0 #ddd,
-    1px 1px 0 #ddd,
-    1px 2px 0 #ddd,
-    2px 1px 0 #ddd,
-    2px 2px 0 #ddd,
-    2px 3px 0 #ddd,
-    3px 2px 0 #ddd,
-    3px 3px 0 #ddd,
-
-    0 0 0 #ddd,
-    0 -1px 0 #ddd,
-    -1px 0 0 #ddd,
-    -1px -1px 0 #ddd,
-    -1px -2px 0 #ddd,
-    -2px -1px 0 #ddd,
-    -2px -2px 0 #ddd,
-    -2px -3px 0 #ddd,
-    -3px -2px 0 #ddd,
-    -3px -3px 0 #ddd;
+.text:hover {
+  cursor: pointer;
 }
 
 .node--internal text {
