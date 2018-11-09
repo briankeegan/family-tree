@@ -224,7 +224,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
       textBoxes.push({ ...props, ids: targetPartner.ids, point: targetPartner.points, textArray: [targetPartner.fullName] });
 
       renderChildren(target.children, middle);
-      renderParents([target, targetPartner]);
+      renderParents([targetPartner, target]);
     } else {
       target.points = [middleX, middleY];
       const middle = target.points;
