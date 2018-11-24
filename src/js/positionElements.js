@@ -20,8 +20,8 @@ const positionElements = (dimensions, svg, familyData, member) => {
   const boxWidth = 200;
   const middleX = width / 2;
   const middleY = 300;
-  const spaceBetween = boxWidth + 100;
   const margin = 10;
+  const spaceBetween = boxWidth * 1.5 + margin / 2;
   const unkownParent = 'Unknown';
 
   const props = { svg, dimensions, points: [], width: boxWidth };
