@@ -133,7 +133,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
           populateParentsArray(parents[i].parents, depth + 1);
         }
       }
-      parentsArray[depth].push(parents);
+      parentsArray[depth].unshift(parents);
     };
 
     startingTargets.forEach(origin => {
