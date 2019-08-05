@@ -14,7 +14,6 @@ let textBoxes = []
 
 const positionElements = (dimensions, svg, familyData, member) => {
   const data = processData(familyData, member)
-  debugger
 
   const { width } = dimensions
   const boxWidth = 200
@@ -27,7 +26,6 @@ const positionElements = (dimensions, svg, familyData, member) => {
   const props = { svg, dimensions, points: [], width: boxWidth }
 
   const mutateOffset = (array, depth, index, offset) => {
-    debugger
     let hasMutatedDepth = false
     for (let i = index; i < array[depth].length; i++) {
       array[depth][i].offset += offset
@@ -41,7 +39,6 @@ const positionElements = (dimensions, svg, familyData, member) => {
   }
 
   const renderChildren = (children = [], originPoints) => {
-    debugger
     const childrenArray = []
     const populateChildrenArray = (children, depth = 0) => {
       children.forEach(child => {
@@ -250,7 +247,6 @@ const positionElements = (dimensions, svg, familyData, member) => {
   }
 
   const createTarget = () => {
-    debugger
     // To do: allow for more than one partner || allow different combos.
     const target = { ...data[0] }
     if (data.length > 1) {
@@ -281,7 +277,6 @@ const positionElements = (dimensions, svg, familyData, member) => {
       renderChildren(target.children, middle)
       renderParents([targetPartner, target])
     } else {
-      debugger
       target.points = [middleX - boxWidth / 2, middleY]
       const middle = target.points
 
