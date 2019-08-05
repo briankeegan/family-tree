@@ -282,6 +282,7 @@ const positionElements = (dimensions, svg, familyData, member) => {
       renderParents([targetPartner, target])
     } else {
       debugger
+      target.points = [middleX - boxWidth / 2, middleY]
       const middle = target.points
 
       textBoxes.push({
