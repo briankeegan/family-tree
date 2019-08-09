@@ -4,9 +4,12 @@ import familyData from 'family-tree.json'
 
 import positionElements from 'src/js/positionElements'
 
+const width = 1200
+const height = 800
+
 const dimensions = {
-  width: 1200,
-  height: 800,
+  width,
+  height,
   paddingTop: 50,
   paddingLeft: 90,
   paddingRight: 90 * 2
@@ -17,9 +20,16 @@ var zoomListener = d3
   .scaleExtent([0.2, 2])
   .on('zoom', zoomHandler)
 
-const svg = d3.select('.john-misty').call(zoomListener)
+// Set height / width hear, so it's consistent with centering of items
+document.querySelector(
+  'svg'
+).style.cssText = `height: ${height}px; width: ${width}px;`
 
-const content = svg.append('g').attr('transform', 'translate(0, 0) scale(1)')
+const johnMisty = d3.select('.john-misty').call(zoomListener)
+
+const content = johnMisty
+  .append('g')
+  .attr('transform', 'translate(0, 0) scale(1)')
 
 function zoomHandler() {
   const { x, y, k } = d3.event.transform
@@ -29,7 +39,7 @@ function zoomHandler() {
 }
 
 const resetPosition = () => {
-  svg.call(zoomListener.transform, d3.zoomIdentity)
+  johnMisty.call(zoomListener.transform, d3.zoomIdentity)
 }
 
 d3.select('.reset').on('click', resetPosition)
