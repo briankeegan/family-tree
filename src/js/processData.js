@@ -1,9 +1,11 @@
+import _ from 'lodash'
+
 const getMember = ({ familyNameId, memberId }, families) => {
   const family = families.find(family => family.familyNameId === familyNameId)
   const member = (family.members || []).find(
     member => member.memberId === memberId
   )
-  return member || {}
+  return _.cloneDeep(member) || {}
 }
 
 const getExistingMembers = (members, families) =>
@@ -72,6 +74,7 @@ const processData = ({ families }, targetIds) => {
       return partner
     }
   )
+  console.log('thing', [targetMember, ...partners])
   return [targetMember, ...partners]
 }
 
