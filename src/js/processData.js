@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-const getMember = ({ familyNameId, memberId }, families) => {
+export const getMember = ({ familyNameId, memberId }, families) => {
   const family = families.find(family => family.familyNameId === familyNameId)
   const member = (family.members || []).find(
     member => member.memberId === memberId
